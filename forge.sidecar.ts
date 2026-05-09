@@ -59,12 +59,15 @@ function build(
 	binDir: string,
 	binName: string,
 ) {
-	const tscBin = process.platform === 'win32'
-		? path.resolve('node_modules', '.bin', 'tsc.cmd')
-		: path.resolve('node_modules', '.bin', 'tsc');
+	// Run tsc via Node directly to avoid .cmd wrapper issues with spaces in paths on Windows
+	const tscJs = path.resolve('node_modules', 'typescript', 'bin', 'tsc');
 	const commands: Array<[string, string[], object?]> = [
-		[tscBin, ['--project', 'tsconfig.sidecar.json', '--outDir', sourcesDir]],
+		[process.execPath, [tscJs, '--project', 'tsconfig.sidecar.json', '--outDir', sourcesDir]],
 	];
+
+	const npmBin = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+	// Run pkg via Node directly to avoid .cmd wrapper issues with spaces in paths on Windows
+	const pkgJs = path.resolve('node_modules', '@yao-pkg', 'pkg', 'lib-es5', 'bin.js');
 
 	buildForArchs.split(',').forEach((arch) => {
 		const binPath = isStartScrpt()
@@ -77,11 +80,12 @@ function build(
 		// FIXME: rebuilding mountutils shouldn't be necessary, but it is.
 		// It's coming from etcher-sdk, a fix has been upstreamed but to use
 		// the latest etcher-sdk we need to upgrade axios at the same time.
-		commands.push(['npm', ['rebuild', 'mountutils', `--arch=${arch}`]]);
+		commands.push([npmBin, ['rebuild', 'mountutils', `--arch=${arch}`], { shell: true }]);
 
 		commands.push([
-			'pkg',
+			process.execPath,
 			[
+				pkgJs,
 				path.join(sourcesDir, 'util', 'api.js'),
 				'-c',
 				'pkg-sidecar.json',
@@ -102,7 +106,7 @@ function build(
 
 	commands.forEach(([cmd, args, opt]) => {
 		log('running command:', cmd, args.join(' '));
-		execFileSync(cmd, args, { shell: true, stdio: 'inherit', ...opt });
+		execFileSync(cmd, args, { stdio: 'inherit', ...opt });
 	});
 }
 
