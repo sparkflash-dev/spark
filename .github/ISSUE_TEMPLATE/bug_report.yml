@@ -1,0 +1,86 @@
+name: Bug Report
+description: Something is broken or behaving unexpectedly
+title: "bug: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill this out. The more detail you provide, the faster the bug gets fixed.
+        **Please do not include personal file paths, SSH keys or passwords in any screenshots.**
+
+  - type: input
+    id: version
+    attributes:
+      label: Spark version
+      description: Found in Settings → About, or run `spark --version` in a terminal.
+      placeholder: "2.1.4"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system & architecture
+      placeholder: "Ubuntu 24.04 x64 / Windows 11 ARM / macOS 15 M2"
+    validations:
+      required: true
+
+  - type: input
+    id: image
+    attributes:
+      label: Image being flashed
+      description: Filename and format only — no full paths.
+      placeholder: "ubuntu-24.04-desktop-amd64.iso / raspios.img.xz"
+    validations:
+      required: true
+
+  - type: input
+    id: drive
+    attributes:
+      label: Target drive
+      placeholder: "USB 3.0 32 GB SanDisk / microSD via built-in reader"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      placeholder: "The image should flash successfully and show the finish screen."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      placeholder: "The app shows an error: …"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Spark
+        2. Select the image …
+        3. Select the drive …
+        4. Click Flash
+        5. Error appears: …
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console output
+      description: Open DevTools with `Ctrl+Shift+I` (Windows/Linux) or `Cmd+Opt+I` (macOS), go to the Console tab, copy any errors.
+      render: shell
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Running as root? Behind a proxy? On a VM? Tiling WM without a polkit agent?

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question / Discussion
+    url: https://github.com/sparkflash-dev/spark/discussions
+    about: Not a bug? Ask a question or start a discussion here.
+  - name: Security vulnerability
+    url: https://github.com/sparkflash-dev/spark/security/advisories/new
+    about: Report a security issue privately — do not open a public issue.

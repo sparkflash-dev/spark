@@ -1,0 +1,250 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version label for artifacts (e.g. 2.1.4-test)'
+        required: false
+        default: 'manual'
+
+permissions:
+  contents: write
+
+jobs:
+  # ──────────────────────────────────────────────
+  # Linux  →  .deb  .rpm  .zip
+  # ──────────────────────────────────────────────
+  build-linux:
+    name: Build · Linux
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y libudev-dev rpm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run make
+        env:
+          NODE_ENV: production
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-artifacts
+          path: |
+            out/make/**/*.deb
+            out/make/**/*.rpm
+            out/make/**/*.zip
+          retention-days: 7
+
+  # ──────────────────────────────────────────────
+  # Windows  →  Setup.exe  .zip
+  # ──────────────────────────────────────────────
+  build-windows:
+    name: Build · Windows
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run make
+        env:
+          NODE_ENV: production
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-artifacts
+          path: |
+            out/make/**/*.exe
+            out/make/**/*.zip
+          retention-days: 7
+
+  # ──────────────────────────────────────────────
+  # macOS Intel  →  .dmg  .zip
+  # ──────────────────────────────────────────────
+  build-macos-intel:
+    name: Build · macOS (Intel)
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run make
+        env:
+          NODE_ENV: production
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-intel-artifacts
+          path: |
+            out/make/**/*.dmg
+            out/make/**/*.zip
+          retention-days: 7
+
+  # ──────────────────────────────────────────────
+  # macOS Apple Silicon  →  .dmg  .zip
+  # ──────────────────────────────────────────────
+  build-macos-arm:
+    name: Build · macOS (Apple Silicon)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run make
+        env:
+          NODE_ENV: production
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-arm-artifacts
+          path: |
+            out/make/**/*.dmg
+            out/make/**/*.zip
+          retention-days: 7
+
+  # ──────────────────────────────────────────────
+  # Create GitHub Release and attach all binaries
+  # Only runs on tag push, not on workflow_dispatch
+  # ──────────────────────────────────────────────
+  release:
+    name: Publish Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build-linux, build-windows, build-macos-intel, build-macos-arm]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Linux artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-artifacts
+          path: dist/linux
+
+      - name: Download Windows artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-artifacts
+          path: dist/windows
+
+      - name: Download macOS Intel artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-intel-artifacts
+          path: dist/macos-intel
+
+      - name: Download macOS ARM artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-arm-artifacts
+          path: dist/macos-arm
+
+      - name: Flatten dist directory
+        run: find dist -type f | xargs -I{} mv {} dist/ 2>/dev/null || true
+
+      - name: Rename macOS ARM DMG to include arch suffix
+        run: |
+          for f in dist/macos-arm/*.dmg; do
+            [ -f "$f" ] || continue
+            base=$(basename "$f" .dmg)
+            mv "$f" "dist/${base}-arm64.dmg"
+          done
+          for f in dist/macos-intel/*.dmg; do
+            [ -f "$f" ] || continue
+            base=$(basename "$f" .dmg)
+            mv "$f" "dist/${base}-x64.dmg"
+          done
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          # Extract section between this tag and the next one in CHANGELOG.md
+          NOTES=$(awk "/^## \[?${VERSION#v}/,/^## \[?[0-9]/" CHANGELOG.md 2>/dev/null | head -n -1 | tail -n +2 || echo "See commits for changes.")
+          echo "NOTES<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          name: Spark ${{ steps.version.outputs.VERSION }}
+          body: |
+            ## Spark ${{ steps.version.outputs.VERSION }}
+
+            ${{ steps.changelog.outputs.NOTES }}
+
+            ---
+
+            ### Downloads
+
+            | Platform | File |
+            |----------|------|
+            | 🐧 Linux (Debian/Ubuntu) | `spark_*.deb` |
+            | 🐧 Linux (Fedora/RHEL) | `spark_*.rpm` |
+            | 🐧 Linux (ZIP) | `spark-linux-*.zip` |
+            | 🪟 Windows | `Spark-Setup-*.exe` |
+            | 🍎 macOS (Intel) | `Spark-*-x64.dmg` |
+            | 🍎 macOS (Apple Silicon) | `Spark-*-arm64.dmg` |
+
+            > **Linux users:** run `sudo apt install ./spark_*.deb` or `sudo rpm -i spark_*.rpm`
+          draft: false
+          prerelease: false
+          fail_on_unmatched_files: false
+          files: |
+            dist/*.deb
+            dist/*.rpm
+            dist/*.exe
+            dist/*.dmg
+            dist/*.zip
