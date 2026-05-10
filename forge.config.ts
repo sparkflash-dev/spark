@@ -1,5 +1,4 @@
 import type { ForgeConfig } from '@electron-forge/shared-types';
-import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
@@ -13,18 +12,12 @@ import * as sidecar from './forge.sidecar';
 import { hostDependencies, productDescription } from './package.json';
 
 const osxSigningConfig: any = {};
-let winSigningConfig: any = {};
-
 if (process.env.NODE_ENV === 'production') {
 	osxSigningConfig.osxNotarize = {
 		tool: 'notarytool',
 		appleId: process.env.XCODE_APP_LOADER_EMAIL,
 		appleIdPassword: process.env.XCODE_APP_LOADER_PASSWORD,
 		teamId: process.env.XCODE_APP_LOADER_TEAM_ID,
-	};
-
-	winSigningConfig = {
-		signWithParams: `-sha1 ${process.env.SM_CODE_SIGNING_CERT_SHA1_HASH} -tr ${process.env.TIMESTAMP_SERVER} -td sha256 -fd sha256 -d spark`,
 	};
 }
 
@@ -55,12 +48,7 @@ const config: ForgeConfig = {
 	},
 	makers: [
 		new MakerZIP(),
-		new MakerSquirrel({
-			setupIcon: 'assets/icon.ico',
-			loadingGif: 'assets/icon.png',
-			...winSigningConfig,
-		}),
-		new MakerDMG({
+new MakerDMG({
 			background: './assets/dmg/background.tiff',
 			icon: './assets/icon.icns',
 			iconSize: 110,
