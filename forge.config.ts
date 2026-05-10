@@ -1,4 +1,5 @@
 import type { ForgeConfig } from '@electron-forge/shared-types';
+import { MakerSquirrel } from '@electron-forge/maker-squirrel';
 import { MakerZIP } from '@electron-forge/maker-zip';
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
@@ -48,7 +49,11 @@ const config: ForgeConfig = {
 	},
 	makers: [
 		new MakerZIP(),
-new MakerDMG({
+		new MakerSquirrel({
+			setupIcon: 'assets/icon.ico',
+			loadingGif: 'assets/icon.png',
+		}),
+		new MakerDMG({
 			background: './assets/dmg/background.tiff',
 			icon: './assets/icon.icns',
 			iconSize: 110,
