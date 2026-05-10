@@ -93,7 +93,7 @@ function build(
 				'--no-bytecode',
 				'--public',
 				'--public-packages',
-				'"*"',
+				'*',
 				// always build for host platform and node version
 				// https://github.com/vercel/pkg-fetch/releases
 				'--target',
