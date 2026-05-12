@@ -30,7 +30,7 @@ const ELECTRON_SESSION = 'persist:success-banner';
 /**
  * @summary Etcher version search-parameter key
  */
-const ETCHER_VERSION_PARAM = 'etcher-version';
+const SPARK_VERSION_PARAM = 'spark-version';
 
 /**
  * @summary API version search-parameter key
@@ -86,7 +86,7 @@ export class SafeWebview extends React.PureComponent<
 		};
 		const url = new window.URL(this.props.src);
 		// We set the version GET parameters here.
-		url.searchParams.set(ETCHER_VERSION_PARAM, packageJSON.version);
+		url.searchParams.set(SPARK_VERSION_PARAM, packageJSON.version);
 		url.searchParams.set(API_VERSION_PARAM, API_VERSION);
 		url.searchParams.set(
 			OPT_OUT_ANALYTICS_PARAM,

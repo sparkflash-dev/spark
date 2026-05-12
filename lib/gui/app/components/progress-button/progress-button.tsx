@@ -42,7 +42,7 @@ const FlashProgressBar = styled(ProgressBar)`
 	font-size: 16px;
 	line-height: 48px;
 
-	background: #2f3033;
+	background: #14142a;
 `;
 
 interface ProgressButtonProps {
@@ -57,9 +57,9 @@ interface ProgressButtonProps {
 }
 
 const colors = {
-	decompressing: '#00aeef',
-	flashing: '#da60ff',
-	verifying: '#1ac135',
+	decompressing: '#f59e0b',
+	flashing: '#ef4444',
+	verifying: '#22c55e',
 } as const;
 
 const CancelButton = styled(({ type, onClick, ...props }) => {
@@ -111,7 +111,7 @@ export class ProgressButton extends React.PureComponent<ProgressButtonProps> {
 							<CancelButton
 								type={type}
 								onClick={this.props.cancel}
-								color="#00aeef"
+								color="#f59e0b"
 							/>
 						)}
 					</Flex>

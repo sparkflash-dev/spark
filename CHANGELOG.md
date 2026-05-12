@@ -7,6 +7,25 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [3.0.0] — 2026-05-12
+
+### Added
+- **New design** — deep navy dark theme (`#1a1a2e`), amber/red accent colors, Inter font stack
+- **SHA256 checksum verification** — automatically detects `.sha256sum` / `.sha256` sidecar files and verifies image integrity with progress indicator
+- **Improved error messages** — every flash error now includes human-readable troubleshooting tips
+- **Keyboard shortcuts** — `Ctrl/Cmd+,` opens settings, `Escape` closes modals
+- **New Spark logo** — lightning bolt gradient (amber → red) with glow effect
+
+### Changed
+- Complete rebranding: all `ETCHER_*` environment variables → `SPARK_*`
+- `window.etcher` API → `window.spark`
+- All UI strings updated across English, Chinese Simplified, and Chinese Traditional
+- Progress bar colors: decompressing (amber), flashing (red), verifying (green)
+- Linux install paths: `/opt/balenaEtcher/` → `/opt/Spark/`
+- Switched typography from SourceSansPro to Inter system font stack
+
+---
+
 ## [2.1.4] — 2026-05-04
 
 This is the **first Spark release**, forked from balenaEtcher v2.1.4.

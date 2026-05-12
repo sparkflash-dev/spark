@@ -48,18 +48,18 @@ injectEnvFromArgs();
 
 console.log('Spark sidecar process started');
 
-const ETCHER_SERVER_ADDRESS = process.env.ETCHER_SERVER_ADDRESS as string;
-const ETCHER_SERVER_PORT = process.env.ETCHER_SERVER_PORT as string;
-// const ETCHER_SERVER_ID = process.env.ETCHER_SERVER_ID as string;
+const SPARK_SERVER_ADDRESS = process.env.SPARK_SERVER_ADDRESS as string;
+const SPARK_SERVER_PORT = process.env.SPARK_SERVER_PORT as string;
+// const SPARK_SERVER_ID = process.env.SPARK_SERVER_ID as string;
 
-const ETCHER_TERMINATE_TIMEOUT: number = parseInt(
-	process.env.ETCHER_TERMINATE_TIMEOUT ?? '10000',
+const SPARK_TERMINATE_TIMEOUT: number = parseInt(
+	process.env.SPARK_TERMINATE_TIMEOUT ?? '10000',
 	10,
 );
 
-const host = ETCHER_SERVER_ADDRESS ?? '127.0.0.1';
-const port = parseInt(ETCHER_SERVER_PORT || '3434', 10);
-// const path = ETCHER_SERVER_ID || "etcher";
+const host = SPARK_SERVER_ADDRESS ?? '127.0.0.1';
+const port = parseInt(SPARK_SERVER_PORT || '3434', 10);
+// const path = SPARK_SERVER_ID || "spark";
 
 // TODO: use the path as cheap authentication
 
@@ -84,13 +84,13 @@ async function terminate(exitCode?: number) {
 
 // kill the process if no initila connections or heartbeat for X sec (default 10)
 function setTerminateTimeout() {
-	if (ETCHER_TERMINATE_TIMEOUT > 0) {
+	if (SPARK_TERMINATE_TIMEOUT > 0) {
 		return setTimeout(() => {
 			console.log(
-				`no connections or heartbeat for ${ETCHER_TERMINATE_TIMEOUT} ms, terminating`,
+				`no connections or heartbeat for ${SPARK_TERMINATE_TIMEOUT} ms, terminating`,
 			);
 			terminate();
-		}, ETCHER_TERMINATE_TIMEOUT);
+		}, SPARK_TERMINATE_TIMEOUT);
 	} else {
 		return null;
 	}

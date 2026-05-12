@@ -29,7 +29,7 @@ const config: ForgeConfig = {
 		executableName: 'spark',
 		appBundleId: 'io.github.sparkflash-dev.spark',
 		appCategoryType: 'public.app-category.developer-tools',
-		appCopyright: 'Copyright 2016-2023 Balena Ltd. Modifications copyright 2026 sparkflash-dev contributors',
+		appCopyright: 'Copyright 2024-2026 Spark contributors',
 		darwinDarkModeSupport: true,
 		protocols: [{ name: 'spark', schemes: ['spark'] }],
 		extraResource: [

@@ -43,7 +43,7 @@ import {
 } from '../../components/target-selector/target-selector';
 import { FlashStep } from './Flash';
 
-import EtcherSvg from '../../../assets/etcher.svg';
+import SparkSvg from '../../../assets/spark.svg';
 
 const Icon = styled(BaseIcon)`
 	margin-right: 20px;
@@ -138,10 +138,39 @@ export class MainPage extends React.Component<
 		};
 	}
 
+	private handleKeyDown = (event: KeyboardEvent) => {
+		const isMod = event.ctrlKey || event.metaKey;
+
+		// Ctrl/Cmd+O — open file selector (trigger source selector)
+		if (isMod && event.key === 'o') {
+			event.preventDefault();
+			if (!this.state.isFlashing && !selectionState.hasImage()) {
+				document.dispatchEvent(new CustomEvent('spark:open-file'));
+			}
+		}
+
+		// Ctrl/Cmd+, — open settings
+		if (isMod && event.key === ',') {
+			event.preventDefault();
+			this.setState({ hideSettings: false });
+		}
+
+		// Escape — close settings
+		if (event.key === 'Escape' && !this.state.hideSettings) {
+			event.preventDefault();
+			this.setState({ hideSettings: true });
+		}
+	};
+
 	public componentDidMount() {
 		observe(() => {
 			this.setState(this.stateHelper());
 		});
+		document.addEventListener('keydown', this.handleKeyDown);
+	}
+
+	public componentWillUnmount() {
+		document.removeEventListener('keydown', this.handleKeyDown);
 	}
 
 	private renderMain() {
@@ -219,7 +248,7 @@ export class MainPage extends React.Component<
 				>
 					<Flex width="100%" />
 					<Flex width="100%" alignItems="center" justifyContent="center">
-						<EtcherSvg
+						<SparkSvg
 							width="123px"
 							height="22px"
 							tabIndex={100}
@@ -243,7 +272,7 @@ export class MainPage extends React.Component<
 								onClick={() =>
 									openExternal(
 										selectionState.getImage()?.supportUrl ||
-											'https://github.com/balena-io/etcher/issues',
+											'https://github.com/sparkflash-dev/spark/issues',
 									)
 								}
 								tabIndex={6}

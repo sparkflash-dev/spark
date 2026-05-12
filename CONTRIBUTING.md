@@ -125,7 +125,7 @@ The sidecar needs to run **elevated** to write to drives. In dev mode this is ha
 automatically via `permissions.ts`. You can bypass it for UI work by setting:
 
 ```bash
-ETCHER_NO_SPAWN_UTIL=1 npm start
+SPARK_NO_SPAWN_UTIL=1 npm start
 ```
 
 ---

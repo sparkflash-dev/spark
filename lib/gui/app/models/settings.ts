@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 balena.io
+ * Copyright 2024-2026 Spark contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import * as _ from 'lodash';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
-const debug = _debug('etcher:models:settings');
+const debug = _debug('spark:models:settings');
 
 const JSON_INDENT = 2;
 
@@ -31,9 +31,9 @@ export const DEFAULT_HEIGHT = 480;
  * @summary Userdata directory path
  * @description
  * Defaults to the following:
- * - `%APPDATA%/etcher` on Windows
- * - `$XDG_CONFIG_HOME/etcher` or `~/.config/etcher` on Linux
- * - `~/Library/Application Support/etcher` on macOS
+ * - `%APPDATA%/spark` on Windows
+ * - `$XDG_CONFIG_HOME/spark` or `~/.config/spark` on Linux
+ * - `~/Library/Application Support/spark` on macOS
  * See https://electronjs.org/docs/api/app#appgetpathname
  *
  * NOTE: We use the remote property when this module

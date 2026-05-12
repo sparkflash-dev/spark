@@ -3,7 +3,7 @@
   "private": true,
   "displayName": "Spark",
   "productName": "Spark",
-  "version": "2.1.4",
+  "version": "3.0.0",
   "packageType": "local",
   "main": ".webpack/main",
   "description": "Flash OS images to SD cards and USB drives — fast, clean, no telemetry.",

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 balena.io
+ * Copyright 2024-2026 Spark contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,7 @@ export const rendererConfig: Configuration = {
 
 export const mainConfig: Configuration = {
 	entry: {
-		etcher: './lib/gui/etcher.ts',
+		spark: './lib/gui/etcher.ts',
 	},
 	module: {
 		rules,

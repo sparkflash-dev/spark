@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40">
+  <defs>
+    <linearGradient id="bolt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#ef4444"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Lightning bolt icon -->
+  <g filter="url(#glow)">
+    <path d="M22 4 L14 19 L20 19 L16 36 L30 17 L23 17 L28 4 Z" fill="url(#bolt)" opacity="0.95"/>
+  </g>
+  <!-- SPARK text -->
+  <text x="42" y="29" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="26" font-weight="700" fill="#ffffff" letter-spacing="2">SPARK</text>
+</svg>

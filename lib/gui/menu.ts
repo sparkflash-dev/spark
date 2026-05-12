@@ -69,7 +69,7 @@ export function buildWindowMenu(window: electron.BrowserWindow) {
 					label: i18next.t('menu.issue'),
 					click() {
 						electron.shell.openExternal(
-							'https://github.com/balena-io/etcher/issues',
+							'https://github.com/sparkflash-dev/spark/issues',
 						);
 					},
 				},

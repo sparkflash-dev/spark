@@ -41,21 +41,14 @@ const COMPLETED_PERCENTAGE = 100;
 const SPEED_PRECISION = 2;
 
 const getErrorMessageFromCode = (errorCode: string) => {
-	// TODO: All these error codes to messages translations
-	// should go away if the writer emitted user friendly
-	// messages on the first place.
-	if (errorCode === 'EVALIDATION') {
-		return messages.error.validation();
-	} else if (errorCode === 'EUNPLUGGED') {
-		return messages.error.driveUnplugged();
-	} else if (errorCode === 'EIO') {
-		return messages.error.inputOutput();
-	} else if (errorCode === 'ENOSPC') {
-		return messages.error.notEnoughSpaceInDrive();
-	} else if (errorCode === 'ECHILDDIED') {
-		return messages.error.childWriterDied();
-	}
-	return '';
+	const suggestions: Record<string, string> = {
+		EVALIDATION: messages.error.validation() + '\n\nTip: Try a different USB drive or port. If the issue persists, re-download the image file.',
+		EUNPLUGGED: messages.error.driveUnplugged() + '\n\nTip: Use a different USB port, preferably one directly on the motherboard rather than a hub.',
+		EIO: messages.error.inputOutput() + '\n\nTip: Try a different USB port or cable. If using a hub, connect directly to your computer.',
+		ENOSPC: messages.error.notEnoughSpaceInDrive() + '\n\nTip: Check the image size and use a drive with enough capacity.',
+		ECHILDDIED: messages.error.childWriterDied() + '\n\nTip: Make sure no antivirus is blocking Spark, and that you have administrator privileges.',
+	};
+	return suggestions[errorCode] || '';
 };
 
 function notifySuccess(

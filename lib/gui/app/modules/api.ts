@@ -24,10 +24,10 @@ const connectionRetryDelay = 1000;
 const connectionRetryAttempts = 10;
 
 async function writerArgv(): Promise<string[]> {
-	let entryPoint = await window.etcher.getEtcherUtilPath();
+	let entryPoint = await window.spark.getSparkUtilPath();
 	// AppImages run over FUSE, so the files inside the mount point
 	// can only be accessed by the user that mounted the AppImage.
-	// This means we can't re-spawn Etcher as root from the same
+	// This means we can't re-spawn Spark as root from the same
 	// mount-point, and as a workaround, we re-mount the original
 	// AppImage as root.
 	if (os.platform() === 'linux' && process.env.APPIMAGE && process.env.APPDIR) {
@@ -44,15 +44,15 @@ async function writerArgv(): Promise<string[]> {
 
 async function spawnChild(
 	withPrivileges: boolean,
-	etcherServerId: string,
-	etcherServerAddress: string,
-	etcherServerPort: string,
+	serverId: string,
+	serverAddress: string,
+	serverPort: string,
 ) {
 	const argv = await writerArgv();
 	const env: any = {
-		ETCHER_SERVER_ADDRESS: etcherServerAddress,
-		ETCHER_SERVER_ID: etcherServerId,
-		ETCHER_SERVER_PORT: etcherServerPort,
+		SPARK_SERVER_ADDRESS: serverAddress,
+		SPARK_SERVER_ID: serverId,
+		SPARK_SERVER_PORT: serverPort,
 		UV_THREADPOOL_SIZE: (os.cpus().length * THREADS_PER_CPU).toString(),
 		// This environment variable prevents the AppImages
 		// desktop integration script from presenting the
@@ -98,17 +98,17 @@ type ChildApi = {
 };
 
 async function connectToChildProcess(
-	etcherServerAddress: string,
-	etcherServerPort: string,
-	etcherServerId: string,
+	serverAddress: string,
+	serverPort: string,
+	serverId: string,
 ): Promise<ChildApi | { failed: boolean }> {
 	return new Promise((resolve, reject) => {
 		// TODO: default to IPC connections https://github.com/websockets/ws/blob/master/doc/ws.md#ipc-connections
 		// TODO: use the path as cheap authentication
 
-		console.log(etcherServerId);
+		console.log(serverId);
 
-		const url = `ws://${etcherServerAddress}:${etcherServerPort}`;
+		const url = `ws://${serverAddress}:${serverPort}`;
 
 		const ws = new WebSocket(url);
 
@@ -208,28 +208,28 @@ async function spawnChildAndConnect({
 }: {
 	withPrivileges: boolean;
 }): Promise<ChildApi> {
-	const etcherServerAddress = process.env.ETCHER_SERVER_ADDRESS ?? '127.0.0.1'; // localhost
-	const etcherServerPort =
-		process.env.ETCHER_SERVER_PORT ?? withPrivileges ? '3435' : '3434';
-	const etcherServerId =
-		process.env.ETCHER_SERVER_ID ??
-		`etcher-${Math.random().toString(36).substring(7)}`;
+	const serverAddress = process.env.SPARK_SERVER_ADDRESS ?? '127.0.0.1'; // localhost
+	const serverPort =
+		process.env.SPARK_SERVER_PORT ?? withPrivileges ? '3435' : '3434';
+	const serverId =
+		process.env.SPARK_SERVER_ID ??
+		`spark-${Math.random().toString(36).substring(7)}`;
 
 	console.log(
 		`Starting ${
 			withPrivileges ? 'privileged' : 'unprivileged'
-		} flasher sidecar on port ${etcherServerPort}`,
+		} flasher sidecar on port ${serverPort}`,
 	);
 
 	// spawn the child process, which will act as the ws server
-	// ETCHER_NO_SPAWN_UTIL can be set to launch a GUI only version of etcher, in that case you'll probably want to set other ENV to match your setup
-	if (!process.env.ETCHER_NO_SPAWN_UTIL) {
+	// SPARK_NO_SPAWN_UTIL can be set to launch a GUI only version, in that case you'll probably want to set other ENV to match your setup
+	if (!process.env.SPARK_NO_SPAWN_UTIL) {
 		try {
 			const result = await spawnChild(
 				withPrivileges,
-				etcherServerId,
-				etcherServerAddress,
-				etcherServerPort,
+				serverId,
+				serverAddress,
+				serverPort,
 			);
 			if (result.cancelled) {
 				throw new Error('Starting flasher sidecar process was cancelled');
@@ -245,9 +245,9 @@ async function spawnChildAndConnect({
 		let retry = 0;
 		while (retry < connectionRetryAttempts) {
 			const result = await connectToChildProcess(
-				etcherServerAddress,
-				etcherServerPort,
-				etcherServerId,
+				serverAddress,
+				serverPort,
+				serverId,
 			);
 			if (result.failed) {
 				retry++;

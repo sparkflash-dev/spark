@@ -78,8 +78,8 @@ function build(
 				path.resolve(binDir, arch, binName);
 
 		// FIXME: rebuilding mountutils shouldn't be necessary, but it is.
-		// It's coming from etcher-sdk, a fix has been upstreamed but to use
-		// the latest etcher-sdk we need to upgrade axios at the same time.
+		// It's coming from the SDK; a fix has been upstreamed but to use
+		// the latest SDK we need to upgrade axios at the same time.
 		commands.push([npmBin, ['rebuild', 'mountutils', `--arch=${arch}`], { shell: true }]);
 
 		commands.push([
@@ -140,11 +140,11 @@ export class SidecarPlugin extends PluginBase<void> {
 	}
 
 	getHooks(): ForgeMultiHookMap {
-		const DEFINE_NAME = 'ETCHER_UTIL_BIN_PATH';
+		const DEFINE_NAME = 'SPARK_UTIL_BIN_PATH';
 		const BASE_DIR = path.join('out', 'sidecar');
 		const SRC_DIR = path.join(BASE_DIR, 'src');
 		const BIN_DIR = path.join(BASE_DIR, 'bin');
-		const BIN_NAME = `etcher-util${process.platform === 'win32' ? '.exe' : ''}`;
+		const BIN_NAME = `spark-util${process.platform === 'win32' ? '.exe' : ''}`;
 
 		return {
 			resolveForgeConfig: async (currentConfig) => {

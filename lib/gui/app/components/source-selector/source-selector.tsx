@@ -71,6 +71,8 @@ import type {
 	Source,
 } from '../../../../shared/typings/source-selector';
 import * as i18next from 'i18next';
+import { findChecksumFile, verifyChecksum } from '../../utils/checksum';
+import type { ChecksumResult } from '../../utils/checksum';
 
 const recentUrlImagesKey = 'recentUrlImages';
 
@@ -150,10 +152,10 @@ const Card = styled(BaseCard)`
 // TODO move these styles to rendition
 const ModalText = styled.p`
 	a {
-		color: rgb(0, 174, 239);
+		color: #f59e0b;
 
 		&:hover {
-			color: rgb(0, 139, 191);
+			color: #d97706;
 		}
 	}
 `;
@@ -352,6 +354,9 @@ interface SourceSelectorState {
 	defaultFlowActive: boolean;
 	imageSelectorOpen: boolean;
 	imageLoading: boolean;
+	checksumResult: ChecksumResult | null;
+	checksumVerifying: boolean;
+	checksumProgress: number;
 }
 
 export class SourceSelector extends React.Component<
@@ -371,11 +376,20 @@ export class SourceSelector extends React.Component<
 			defaultFlowActive: true,
 			imageSelectorOpen: false,
 			imageLoading: false,
+			checksumResult: null,
+			checksumVerifying: false,
+			checksumProgress: 0,
 		};
 
 		// Bind `this` since it's used in an event's callback
 		this.onSelectImage = this.onSelectImage.bind(this);
 	}
+
+	private onOpenFileShortcut = () => {
+		if (!this.props.flashing && !this.state.hasImage && !this.state.imageSelectorOpen) {
+			this.openImageSelector();
+		}
+	};
 
 	public componentDidMount() {
 		this.unsubscribe = observe(() => {
@@ -383,11 +397,13 @@ export class SourceSelector extends React.Component<
 		});
 		ipcRenderer.on('select-image', this.onSelectImage);
 		ipcRenderer.send('source-selector-ready');
+		document.addEventListener('spark:open-file', this.onOpenFileShortcut);
 	}
 
 	public componentWillUnmount() {
 		this.unsubscribe?.();
 		ipcRenderer.removeListener('select-image', this.onSelectImage);
+		document.removeEventListener('spark:open-file', this.onOpenFileShortcut);
 	}
 
 	public componentDidUpdate(
@@ -423,6 +439,7 @@ export class SourceSelector extends React.Component<
 
 	private reselectSource() {
 		selectionState.deselectImage();
+		this.setState({ checksumResult: null, checksumVerifying: false });
 	}
 
 	private selectSource(
@@ -516,6 +533,17 @@ export class SourceSelector extends React.Component<
 					metadata.auth = auth;
 					metadata.SourceType = SourceType;
 					selectionState.selectSource(metadata);
+
+					// Auto-verify checksum if a .sha256sum file exists alongside the image
+					if (isString(selected) && SourceType === 'File' && findChecksumFile(selected)) {
+						this.setState({ checksumVerifying: true, checksumProgress: 0, checksumResult: null });
+						const result = await verifyChecksum(selected, (pct) => {
+							this.setState({ checksumProgress: pct });
+						});
+						this.setState({ checksumVerifying: false, checksumResult: result });
+					} else {
+						this.setState({ checksumResult: null, checksumVerifying: false });
+					}
 				}
 			})(),
 		};
@@ -670,6 +698,24 @@ export class SourceSelector extends React.Component<
 							{!isNil(imageSize) && !imageLoading && (
 								<DetailsText>{prettyBytes(imageSize)}</DetailsText>
 							)}
+							{this.state.checksumVerifying && (
+								<Txt fontSize="11px" color="#f59e0b" mt="4px">
+									Verifying checksum... {this.state.checksumProgress}%
+								</Txt>
+							)}
+							{this.state.checksumResult && !this.state.checksumVerifying && (
+								<Txt
+									fontSize="11px"
+									color={this.state.checksumResult.verified ? '#22c55e' : '#ef4444'}
+									mt="4px"
+								>
+									{this.state.checksumResult.verified
+										? 'SHA256 verified'
+										: this.state.checksumResult.error
+											? `Checksum error: ${this.state.checksumResult.error}`
+											: 'SHA256 mismatch — image may be corrupted'}
+								</Txt>
+							)}
 						</>
 					) : (
 						<>
@@ -716,7 +762,7 @@ export class SourceSelector extends React.Component<
 						}}
 						title={
 							<span>
-								<ExclamationTriangleSvg fill="#fca321" height="1em" />{' '}
+								<ExclamationTriangleSvg fill="#f59e0b" height="1em" />{' '}
 								<span>{this.state.warning.title}</span>
 							</span>
 						}

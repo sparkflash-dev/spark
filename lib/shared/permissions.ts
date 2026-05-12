@@ -40,11 +40,11 @@ function commandWithEnv(
 	env: _.Dictionary<string | undefined>,
 ): string[] {
 	const envFilter: string[] = [
-		'ETCHER_SERVER_ADDRESS',
-		'ETCHER_SERVER_PORT',
-		'ETCHER_SERVER_ID',
-		'ETCHER_NO_SPAWN_UTIL',
-		'ETCHER_TERMINATE_TIMEOUT',
+		'SPARK_SERVER_ADDRESS',
+		'SPARK_SERVER_PORT',
+		'SPARK_SERVER_ID',
+		'SPARK_NO_SPAWN_UTIL',
+		'SPARK_TERMINATE_TIMEOUT',
 		'UV_THREADPOOL_SIZE',
 	];
 

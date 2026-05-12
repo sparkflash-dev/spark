@@ -228,7 +228,7 @@ export const Alert = styled((props) => (
 	justify-content: center;
 	align-items: center;
 	font-size: 14px;
-	background-color: #fca321;
+	background-color: #f59e0b;
 	text-align: center;
 
 	* {

@@ -61,7 +61,7 @@ store.dispatch({
 	data: uuidV4(),
 });
 
-console.log(`Etcher v${packageJSON.version}`);
+console.log(`Spark v${packageJSON.version}`);
 
 const debouncedLog = debounce(console.log, 1000, { maxWait: 1000 });
 

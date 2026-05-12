@@ -19,15 +19,15 @@ import { Theme } from 'rendition';
 
 export const colors = {
 	dark: {
-		foreground: '#fff',
-		background: '#4d5057',
+		foreground: '#f0f0f0',
+		background: '#1a1a2e',
 		soft: {
-			foreground: '#ddd',
-			background: '#64686a',
+			foreground: '#c8c8d4',
+			background: '#252542',
 		},
 		disabled: {
-			foreground: '#787c7f',
-			background: '#3a3c41',
+			foreground: '#5a5a72',
+			background: '#14142a',
 		},
 	},
 	light: {
@@ -42,33 +42,33 @@ export const colors = {
 		},
 	},
 	default: {
-		foreground: '#b3b3b3',
-		background: '#ececec',
+		foreground: '#9a9ab0',
+		background: '#252542',
 	},
 	primary: {
 		foreground: '#fff',
-		background: '#00aeef',
+		background: '#f59e0b',
 	},
 	secondary: {
 		foreground: '#000',
-		background: '#ddd',
+		background: '#2d2d4a',
 		main: '#fff',
 	},
 	warning: {
 		foreground: '#fff',
-		background: '#fca321',
+		background: '#f59e0b',
 	},
 	danger: {
 		foreground: '#fff',
-		background: '#d9534f',
+		background: '#ef4444',
 	},
 	success: {
 		foreground: '#fff',
-		background: '#5fb835',
+		background: '#22c55e',
 	},
 };
 
-const font = 'SourceSansPro';
+const font = 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 
 export const theme = _.merge({}, Theme, {
 	colors,

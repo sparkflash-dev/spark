@@ -5,8 +5,8 @@ import * as webapi from '../webapi';
 
 declare global {
 	interface Window {
-		etcher: typeof webapi;
+		spark: typeof webapi;
 	}
 }
 
-window['etcher'] = webapi;
+window['spark'] = webapi;

@@ -167,7 +167,7 @@ export function FlashResults({
 					<DoneIcon
 						skipped={skip}
 						allFailed={allFailed}
-						color={allFailed || someFailed ? '#c6c8c9' : '#1ac135'}
+						color={allFailed || someFailed ? '#c6c8c9' : '#22c55e'}
 					/>
 					<Txt>{middleEllipsis(image, 24)}</Txt>
 				</Flex>
@@ -181,7 +181,7 @@ export function FlashResults({
 			<Flex flexDirection="column" color="#7e8085">
 				{results.devices.successful !== 0 ? (
 					<Flex alignItems="center">
-						<CircleSvg width="14px" fill="#1ac135" />
+						<CircleSvg width="14px" fill="#22c55e" />
 						<Txt ml="10px" color="#fff">
 							{results.devices.successful}
 						</Txt>
