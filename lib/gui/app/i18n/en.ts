@@ -137,12 +137,20 @@ const translation = {
 			flashCompleted: 'Flash Completed!',
 		},
 		settings: {
-			errorReporting: 'Anonymously report errors',
-			autoUpdate: 'Auto-updates enabled',
 			settings: 'Settings',
 			systemInformation: 'System Information',
 			trimExtPartitions:
 				'Trim unallocated space on raw images (in ext-type partitions)',
+			desktopNotifications: 'Show desktop notifications when flash completes',
+			validateWriteOnSuccess: 'Verify write after flashing (slower but safer)',
+			decompressFirst: 'Decompress image fully before writing',
+			autoChecksumVerify: 'Auto-verify SHA256 checksum if .sha256sum file exists',
+			showHiddenDrives: 'Show system and hidden drives in target list',
+			confirmBeforeFlash: 'Always ask for confirmation before flashing',
+			keyboardShortcuts: 'Keyboard shortcuts',
+			shortcutOpen: 'Ctrl+O — Open image file',
+			shortcutSettings: 'Ctrl+, — Open settings',
+			shortcutEsc: 'Esc — Close dialogs',
 		},
 		menu: {
 			edit: 'Edit',

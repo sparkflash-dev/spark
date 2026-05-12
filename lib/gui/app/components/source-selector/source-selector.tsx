@@ -44,6 +44,7 @@ import * as errors from '../../../../shared/errors';
 import * as messages from '../../../../shared/messages';
 import * as supportedFormats from '../../../../shared/supported-formats';
 import * as selectionState from '../../models/selection-state';
+import * as settings from '../../models/settings';
 import { observe } from '../../models/store';
 import * as exceptionReporter from '../../modules/exception-reporter';
 import * as osDialog from '../../os/dialog';
@@ -534,8 +535,9 @@ export class SourceSelector extends React.Component<
 					metadata.SourceType = SourceType;
 					selectionState.selectSource(metadata);
 
-					// Auto-verify checksum if a .sha256sum file exists alongside the image
-					if (isString(selected) && SourceType === 'File' && findChecksumFile(selected)) {
+					// Auto-verify checksum if enabled and a .sha256sum file exists alongside the image
+					const autoChecksum = await settings.get('autoChecksumVerify');
+					if (autoChecksum !== false && isString(selected) && SourceType === 'File' && findChecksumFile(selected)) {
 						this.setState({ checksumVerifying: true, checksumProgress: 0, checksumResult: null });
 						const result = await verifyChecksum(selected, (pct) => {
 							this.setState({ checksumProgress: pct });

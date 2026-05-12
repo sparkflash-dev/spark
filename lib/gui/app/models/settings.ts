@@ -78,6 +78,10 @@ const DEFAULT_SETTINGS: _.Dictionary<any> = {
 	desktopNotifications: true,
 	autoBlockmapping: true,
 	decompressFirst: true,
+	validateWriteOnSuccess: true,
+	autoChecksumVerify: true,
+	showHiddenDrives: false,
+	confirmBeforeFlash: true,
 };
 
 const settings = _.cloneDeep(DEFAULT_SETTINGS);
