@@ -64,6 +64,10 @@ function getSettingsSections(): SettingSection[] {
 					name: 'autoChecksumVerify',
 					label: i18next.t('settings.autoChecksumVerify'),
 				},
+				{
+					name: 'badSectorCheck',
+					label: i18next.t('settings.badSectorCheck'),
+				},
 			],
 		},
 		{

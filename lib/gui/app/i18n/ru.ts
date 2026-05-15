@@ -163,6 +163,7 @@ const translation = {
 			showHiddenDrives:
 				'Показывать системные и скрытые диски в списке целей',
 			confirmBeforeFlash: 'Всегда запрашивать подтверждение перед записью',
+			badSectorCheck: 'Проверять поверхность диска перед записью (медленнее)',
 			keyboardShortcuts: 'Горячие клавиши',
 			shortcutOpen: 'Ctrl+O — Открыть файл образа',
 			shortcutSettings: 'Ctrl+, — Открыть настройки',

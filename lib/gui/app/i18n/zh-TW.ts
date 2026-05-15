@@ -139,6 +139,7 @@ const translation = {
 			autoChecksumVerify: '自動驗證 SHA256 校驗和（如果存在 .sha256sum 檔案）',
 			showHiddenDrives: '在目標列表中顯示系統和隱藏的磁碟',
 			confirmBeforeFlash: '燒錄前始終要求確認',
+			badSectorCheck: '寫入前檢查目標磁碟壞軌（較慢）',
 			keyboardShortcuts: '快捷鍵',
 			shortcutOpen: 'Ctrl+O — 開啟映像檔',
 			shortcutSettings: 'Ctrl+, — 開啟設定',

@@ -82,6 +82,7 @@ const DEFAULT_SETTINGS: _.Dictionary<any> = {
 	autoChecksumVerify: true,
 	showHiddenDrives: false,
 	confirmBeforeFlash: true,
+	badSectorCheck: false,
 };
 
 const settings = _.cloneDeep(DEFAULT_SETTINGS);

@@ -153,6 +153,7 @@ const translation = {
 			autoChecksumVerify: '自动验证 SHA256 校验和（如果存在 .sha256sum 文件）',
 			showHiddenDrives: '在目标列表中显示系统和隐藏的磁盘',
 			confirmBeforeFlash: '烧录前始终要求确认',
+			badSectorCheck: '写入前检查目标磁盘坏道（较慢）',
 			keyboardShortcuts: '快捷键',
 			shortcutOpen: 'Ctrl+O — 打开镜像文件',
 			shortcutSettings: 'Ctrl+, — 打开设置',
