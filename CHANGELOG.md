@@ -7,6 +7,28 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [Unreleased] — v3.1.0-dev
+
+### Added
+- **Russian localization** — complete Russian (ru) translation for all UI strings
+- **Enhanced Windows ISO detection** — detects Win7–Win11, Server, Vista with version/edition parsing; improved warning with partition layout guidance
+- **Partition & boot mode display** — image details modal now shows MBR/GPT scheme and UEFI/Legacy boot compatibility
+- **Bad sector check** — optional pre-write surface scan setting to detect faulty drive sectors before writing
+- **Flash queue** — queue manager for sequential multi-image flash operations with event system
+- **CLI mode** — `spark flash --image <path> --drive <device>` headless flash with progress bar, `spark list` for drive enumeration
+- **Persistent storage detection** — detects Ubuntu/Mint/Pop!_OS live ISOs and identifies casper-rw persistence support
+- **55 new tests** — checksum verification (15), Windows ISO detection (12), persistent storage (11), flash queue (17)
+
+### Changed
+- Renamed main entry point `lib/gui/etcher.ts` → `lib/gui/spark.ts`
+- Fixed `isStartScrpt()` typo → `isStartScript()` in forge.sidecar.ts
+- Cleaned up stale TODO/FIXME comments across codebase
+- Deleted unused balena.svg and etcher.svg assets
+- Updated all remaining "Etcher" references in code comments
+- Added missing cancel dialog translations to zh-CN and zh-TW
+
+---
+
 ## [3.0.0] — 2026-05-12
 
 ### Added

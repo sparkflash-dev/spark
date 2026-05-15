@@ -136,6 +136,10 @@ const translation = {
 			speedTip:
 				'通过将镜像大小除以烧录时间来计算速度。\n由于我们能够跳过未使用的部分，因此具有EXT分区的磁盘镜像烧录速度更快。',
 			speed: '速度：{{speed}} MB/秒',
+			elapsed: '已用时间：{{duration}}',
+			cancelTitle: '取消烧录？',
+			cancelConfirm: '是的，取消',
+			cancelWarning: '在烧录过程中取消可能会导致磁盘无法使用。确定要取消吗？',
 			speedShort: '{{speed}} MB/秒',
 			eta: '预计还需要：{{eta}}',
 			failedTarget: '失败的烧录目标',

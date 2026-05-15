@@ -122,6 +122,10 @@ const translation = {
 			speedTip:
 				'透過將映像檔大小除以燒錄時間來計算速度。\n由於我們能夠跳過未使用的部分，因此具有 ext 分割區的磁碟映像檔燒錄速度更快。',
 			speed: '速度：{{speed}} MB/秒',
+			elapsed: '已耗時間：{{duration}}',
+			cancelTitle: '取消燒錄？',
+			cancelConfirm: '是的，取消',
+			cancelWarning: '在燒錄過程中取消可能會導致磁碟無法使用。確定要取消嗎？',
 			speedShort: '{{speed}} MB/秒',
 			eta: '預計還需要：{{eta}}',
 			failedTarget: '目標燒錄失敗',
