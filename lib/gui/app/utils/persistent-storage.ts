@@ -21,11 +21,7 @@ const LIVE_ISO_PATTERNS: Array<{
 	distro: string;
 	method: 'casper-rw' | 'writable';
 }> = [
-	{
-		pattern: /ubuntu/i,
-		distro: 'Ubuntu',
-		method: 'casper-rw',
-	},
+	// More specific *buntu variants must come before generic ubuntu
 	{
 		pattern: /kubuntu/i,
 		distro: 'Kubuntu',
@@ -39,6 +35,11 @@ const LIVE_ISO_PATTERNS: Array<{
 	{
 		pattern: /lubuntu/i,
 		distro: 'Lubuntu',
+		method: 'casper-rw',
+	},
+	{
+		pattern: /ubuntu/i,
+		distro: 'Ubuntu',
 		method: 'casper-rw',
 	},
 	{
