@@ -41,7 +41,7 @@ const translation = {
 			exitWhileFlashing:
 				'You are currently flashing a drive. Closing Spark may leave your drive in an unusable state.',
 			looksLikeWindowsImage:
-				'It looks like you are trying to burn a Windows image.\n\nUnlike other images, Windows images require special processing to be made bootable. We suggest you use a tool specially designed for this purpose, such as <a href="https://rufus.akeo.ie">Rufus</a> (Windows), <a href="https://github.com/slacka/WoeUSB">WoeUSB</a> (Linux), or Boot Camp Assistant (macOS).',
+				'It looks like you are trying to burn a Windows image.\n\nWindows ISOs cannot be simply dd-copied to a USB drive — they require special partition layout (MBR/GPT) and bootloader setup to be bootable.\n\nRecommended tools:\n• <a href="https://rufus.ie">Rufus</a> (Windows) — supports UEFI/Legacy, GPT/MBR\n• <a href="https://github.com/WoeUSB/WoeUSB-ng">WoeUSB-ng</a> (Linux)\n• Boot Camp Assistant (macOS)\n\nSpark may add native Windows ISO support in a future release.',
 			image: 'image',
 			drive: 'drive',
 			missingPartitionTable:

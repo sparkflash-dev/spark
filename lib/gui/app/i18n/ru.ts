@@ -50,7 +50,7 @@ const translation = {
 			exitWhileFlashing:
 				'Сейчас идёт запись на диск. Закрытие Spark может привести к повреждению накопителя.',
 			looksLikeWindowsImage:
-				'Похоже, вы пытаетесь записать образ Windows.\n\nВ отличие от других образов, образы Windows требуют специальной обработки для создания загрузочного носителя. Рекомендуем использовать специализированные инструменты: <a href="https://rufus.akeo.ie">Rufus</a> (Windows), <a href="https://github.com/slacka/WoeUSB">WoeUSB</a> (Linux) или Boot Camp Assistant (macOS).',
+				'Похоже, вы пытаетесь записать образ Windows.\n\nОбразы Windows нельзя просто скопировать на USB-накопитель — им нужна специальная разметка (MBR/GPT) и загрузчик.\n\nРекомендуемые инструменты:\n• <a href="https://rufus.ie">Rufus</a> (Windows) — поддержка UEFI/Legacy, GPT/MBR\n• <a href="https://github.com/WoeUSB/WoeUSB-ng">WoeUSB-ng</a> (Linux)\n• Boot Camp Assistant (macOS)\n\nВ будущих версиях Spark может появиться встроенная поддержка Windows ISO.',
 			image: 'образ',
 			drive: 'диск',
 			missingPartitionTable:

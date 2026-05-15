@@ -469,10 +469,15 @@ export class SourceSelector extends React.Component<
 					}
 
 					if (supportedFormats.looksLikeWindowsImage(selected)) {
+						const winDetails =
+							supportedFormats.getWindowsImageDetails(selected);
+						const versionInfo = winDetails.edition
+							? `${winDetails.version} ${winDetails.edition}`
+							: winDetails.version || 'Windows';
 						this.setState({
 							warning: {
 								message: messages.warning.looksLikeWindowsImage(),
-								title: i18next.t('source.windowsImage'),
+								title: `${i18next.t('source.windowsImage')} (${versionInfo})`,
 							},
 						});
 					}
