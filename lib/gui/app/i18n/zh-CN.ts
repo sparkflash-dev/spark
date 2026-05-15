@@ -143,6 +143,16 @@ const translation = {
 			flashFailed: '烧录失败。',
 			flashCompleted: '烧录成功！',
 		},
+		queue: {
+			title: '烧录队列',
+			addToQueue: '添加到队列',
+			clearQueue: '清空队列',
+			pending: '{{count}} 待处理',
+			completed: '{{count}} 已完成',
+			failed: '{{count}} 失败',
+			queueCompleted: '队列完成！',
+			queueEmpty: '队列为空 — 添加镜像以便依次烧录',
+		},
 		settings: {
 			settings: '软件设置',
 			systemInformation: '系统信息',

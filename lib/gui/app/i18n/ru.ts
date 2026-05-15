@@ -149,6 +149,16 @@ const translation = {
 			flashFailed: 'Запись не удалась.',
 			flashCompleted: 'Запись завершена!',
 		},
+		queue: {
+			title: 'Очередь записи',
+			addToQueue: 'Добавить в очередь',
+			clearQueue: 'Очистить очередь',
+			pending: '{{count}} в ожидании',
+			completed: '{{count}} завершено',
+			failed: '{{count}} с ошибками',
+			queueCompleted: 'Очередь завершена!',
+			queueEmpty: 'Очередь пуста — добавьте образы для последовательной записи',
+		},
 		settings: {
 			settings: 'Настройки',
 			systemInformation: 'Информация о системе',

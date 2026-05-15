@@ -129,6 +129,16 @@ const translation = {
 			flashFailed: '燒錄失敗。',
 			flashCompleted: '燒錄成功！',
 		},
+		queue: {
+			title: '燒錄佇列',
+			addToQueue: '加入佇列',
+			clearQueue: '清空佇列',
+			pending: '{{count}} 待處理',
+			completed: '{{count}} 已完成',
+			failed: '{{count}} 失敗',
+			queueCompleted: '佇列完成！',
+			queueEmpty: '佇列為空 — 新增映像檔以便依序燒錄',
+		},
 		settings: {
 			settings: '軟體設定',
 			systemInformation: '系統資訊',

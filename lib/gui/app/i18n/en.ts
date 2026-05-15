@@ -139,6 +139,16 @@ const translation = {
 			flashFailed: 'Flash Failed.',
 			flashCompleted: 'Flash Completed!',
 		},
+		queue: {
+			title: 'Flash Queue',
+			addToQueue: 'Add to queue',
+			clearQueue: 'Clear queue',
+			pending: '{{count}} pending',
+			completed: '{{count}} completed',
+			failed: '{{count}} failed',
+			queueCompleted: 'Queue completed!',
+			queueEmpty: 'Queue is empty — add images to flash sequentially',
+		},
 		settings: {
 			settings: 'Settings',
 			systemInformation: 'System Information',
