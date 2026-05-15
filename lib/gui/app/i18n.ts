@@ -4,6 +4,7 @@ import zh_CN_translation from './i18n/zh-CN';
 import zh_TW_translation from './i18n/zh-TW';
 import en_translation from './i18n/en';
 import ru_translation from './i18n/ru';
+import ja_translation from './i18n/ja';
 
 export function langParser() {
 	if (process.env.LANG !== undefined) {
@@ -38,9 +39,10 @@ i18next.use(initReactI18next).init({
 		'zh-TW': zh_TW_translation,
 		en: en_translation,
 		ru: ru_translation,
+		ja: ja_translation,
 	},
 });
 
-export const supportedLocales = ['en', 'zh', 'ru'];
+export const supportedLocales = ['en', 'zh', 'ru', 'ja'];
 
 export default i18next;
