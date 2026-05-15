@@ -139,6 +139,14 @@ const translation = {
 			flashFailed: 'Flash Failed.',
 			flashCompleted: 'Flash Completed!',
 		},
+		persistence: {
+			detected: '{{distro}} live ISO detected — persistent storage available',
+			description:
+				'Changes made in the live session will be saved across reboots.',
+			createPartition: 'Create persistence partition',
+			sizeLabel: 'Persistence size',
+			notSupported: 'This image does not support persistent storage',
+		},
 		queue: {
 			title: 'Flash Queue',
 			addToQueue: 'Add to queue',

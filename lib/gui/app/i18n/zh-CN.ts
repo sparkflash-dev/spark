@@ -143,6 +143,13 @@ const translation = {
 			flashFailed: '烧录失败。',
 			flashCompleted: '烧录成功！',
 		},
+		persistence: {
+			detected: '检测到 {{distro}} 实时镜像 — 可用持久存储',
+			description: '在实时会话中所做的更改将在重启后保留。',
+			createPartition: '创建持久存储分区',
+			sizeLabel: '持久存储大小',
+			notSupported: '此镜像不支持持久存储',
+		},
 		queue: {
 			title: '烧录队列',
 			addToQueue: '添加到队列',

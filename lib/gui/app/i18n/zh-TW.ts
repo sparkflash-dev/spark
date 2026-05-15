@@ -129,6 +129,13 @@ const translation = {
 			flashFailed: '燒錄失敗。',
 			flashCompleted: '燒錄成功！',
 		},
+		persistence: {
+			detected: '偵測到 {{distro}} 即時映像 — 可使用持久儲存',
+			description: '在即時工作階段中所做的變更將在重新啟動後保留。',
+			createPartition: '建立持久儲存分割區',
+			sizeLabel: '持久儲存大小',
+			notSupported: '此映像不支援持久儲存',
+		},
 		queue: {
 			title: '燒錄佇列',
 			addToQueue: '加入佇列',
