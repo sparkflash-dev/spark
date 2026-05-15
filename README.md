@@ -148,16 +148,27 @@ Output lands in `out/make/`.
 - [x] Fix `requestMetadata` race condition (#4150)
 - [x] WebSocket input validation & XSS fixes
 
-### 🔜 Next (v3.1+)
+### ✅ Done (v3.1.0-dev)
+- [x] CLI mode — `spark flash --image ubuntu.iso --drive /dev/sdb`
+- [x] Persistent storage detection for Linux live USBs (casper-rw)
+- [x] Enhanced Windows ISO detection (version/edition, partition guidance)
+- [x] Partition scheme & boot mode display (MBR/GPT, UEFI/Legacy)
+- [x] Bad sector pre-write surface scan
+- [x] Flash queue for sequential multi-image operations
+- [x] Flash history (last 20 images with auto-pruning)
+- [x] Drive health analysis (fake capacity, bus type, mountpoint warnings)
+- [x] Auto-eject drive after successful flash
+- [x] Localization — Russian, Japanese, Korean (6 languages total)
+- [x] 64 new tests (checksum, Windows ISO, persistence, queue, drive health)
+
+### 🔜 Next (v3.2+)
 - [ ] Bundle size reduction (target < 100 MB)
 - [ ] Faster writes — direct I/O, parallel verification
 - [ ] Resume interrupted writes
-- [ ] Windows ISO support (MBR/GPT, UEFI/Legacy)
-- [ ] Persistent storage for Linux live USBs
-- [ ] CLI mode — `spark flash --image ubuntu.iso --drive /dev/sdb`
+- [ ] Native Windows ISO flashing (MBR/GPT, UEFI/Legacy)
 - [ ] Drive backup / clone to `.img` file
 - [ ] Multi-boot (Ventoy-style)
-- [ ] Localization — Japanese, Korean, German, French, Spanish, Russian
+- [ ] Localization — German, French, Spanish
 
 ---
 

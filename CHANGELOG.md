@@ -11,13 +11,18 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Added
 - **Russian localization** — complete Russian (ru) translation for all UI strings
+- **Japanese localization** — complete Japanese (ja) translation
+- **Korean localization** — complete Korean (ko) translation
 - **Enhanced Windows ISO detection** — detects Win7–Win11, Server, Vista with version/edition parsing; improved warning with partition layout guidance
 - **Partition & boot mode display** — image details modal now shows MBR/GPT scheme and UEFI/Legacy boot compatibility
 - **Bad sector check** — optional pre-write surface scan setting to detect faulty drive sectors before writing
 - **Flash queue** — queue manager for sequential multi-image flash operations with event system
 - **CLI mode** — `spark flash --image <path> --drive <device>` headless flash with progress bar, `spark list` for drive enumeration
 - **Persistent storage detection** — detects Ubuntu/Mint/Pop!_OS live ISOs and identifies casper-rw persistence support
-- **55 new tests** — checksum verification (15), Windows ISO detection (12), persistent storage (11), flash queue (17)
+- **Flash history** — track last 20 flashed images with auto-pruning of deleted files
+- **Drive health analysis** — heuristic indicators for fake capacity, read-only, bus type, and mountpoint warnings
+- **Auto-eject setting** — optionally eject drive after successful flash
+- **64 new tests** — checksum (15), Windows ISO (12), persistent storage (11), flash queue (17), drive health (9)
 
 ### Changed
 - Renamed main entry point `lib/gui/etcher.ts` → `lib/gui/spark.ts`
