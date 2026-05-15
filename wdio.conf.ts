@@ -33,7 +33,7 @@ export const config: Options.Testrunner = {
 	//
 	specs: ['./tests/**/*.spec.ts'],
 	// Patterns to exclude.
-	// FIXME: Remove the following exclusions once the tests are ported to WDIO
+	// Excluded: these tests use Jest directly and are not compatible with WDIO
 	exclude: [
 		'tests/gui/modules/image-writer.spec.ts',
 		'tests/gui/os/window-progress.spec.ts',

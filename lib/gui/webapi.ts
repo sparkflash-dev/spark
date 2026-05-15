@@ -5,9 +5,7 @@
 
 import { ipcRenderer } from 'electron';
 
-// FIXME: this is a workaround for the renderer to be able to find the spark-util
-// binary. We should instead export a function that asks the main process to launch
-// the binary itself.
+// Returns the path to the spark-util sidecar binary via the main process.
 export async function getSparkUtilPath(): Promise<string> {
 	const utilPath = await ipcRenderer.invoke('get-util-path');
 	console.log(utilPath);

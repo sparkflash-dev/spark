@@ -60,7 +60,7 @@ spark/
 │   │   │   ├── modules/            # api.ts (IPC client), image-writer, …
 │   │   │   ├── pages/              # main page, flash step
 │   │   │   └── i18n/               # translation strings
-│   │   └── etcher.ts               # main process entry point
+│   │   └── spark.ts               # main process entry point
 │   ├── util/
 │   │   ├── api.ts                  # sidecar WebSocket server
 │   │   ├── child-writer.ts         # etcher-sdk write wrapper
@@ -78,7 +78,7 @@ The app has **three processes**:
 
 | Process | Entry | Role |
 |---------|-------|------|
-| Main | `lib/gui/etcher.ts` | Electron main — window management, privilege elevation |
+| Main | `lib/gui/spark.ts` | Electron main — window management, privilege elevation |
 | Renderer | `lib/gui/app/app.ts` | React UI |
 | Sidecar | `lib/util/api.ts` | Privileged child process — writes to drives via WebSocket |
 

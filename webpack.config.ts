@@ -97,7 +97,7 @@ export const rendererConfig: Configuration = {
 
 export const mainConfig: Configuration = {
 	entry: {
-		spark: './lib/gui/etcher.ts',
+		spark: './lib/gui/spark.ts',
 	},
 	module: {
 		rules,

@@ -14,7 +14,7 @@ import debug from 'debug';
 
 const log = debug('sidecar');
 
-function isStartScrpt(): boolean {
+function isStartScript(): boolean {
 	return process.env.npm_lifecycle_event === 'start';
 }
 
@@ -34,7 +34,7 @@ function addWebpackDefine(
 			mainConfig.plugins = [];
 		}
 
-		const value = isStartScrpt()
+		const value = isStartScript()
 			? // on `npm start`, point directly to the binary
 				path.resolve(binDir, binName)
 			: // otherwise point relative to the resources folder of the bundled app
@@ -70,16 +70,14 @@ function build(
 	const pkgJs = path.resolve('node_modules', '@yao-pkg', 'pkg', 'lib-es5', 'bin.js');
 
 	buildForArchs.split(',').forEach((arch) => {
-		const binPath = isStartScrpt()
+		const binPath = isStartScript()
 			? // on `npm start`, we don't know the arch we're building for at the time we're
 				// adding the webpack define, so we just build under binDir
 				path.resolve(binDir, binName)
 			: // otherwise build in arch-specific directory within binDir
 				path.resolve(binDir, arch, binName);
 
-		// FIXME: rebuilding mountutils shouldn't be necessary, but it is.
-		// It's coming from the SDK; a fix has been upstreamed but to use
-		// the latest SDK we need to upgrade axios at the same time.
+		// Rebuild mountutils for the target arch (required by etcher-sdk).
 		commands.push([npmBin, ['rebuild', 'mountutils', `--arch=${arch}`], { shell: true }]);
 
 		commands.push([
@@ -116,7 +114,7 @@ function copyArtifact(
 	binDir: string,
 	binName: string,
 ) {
-	const binPath = isStartScrpt()
+	const binPath = isStartScript()
 		? // on `npm start`, we don't know the arch we're building for at the time we're
 			// adding the webpack define, so look for the binary directly under binDir
 			path.resolve(binDir, binName)
@@ -136,7 +134,7 @@ export class SidecarPlugin extends PluginBase<void> {
 	constructor() {
 		super();
 		this.getHooks = this.getHooks.bind(this);
-		log('isStartScript:', isStartScrpt());
+		log('isStartScript:', isStartScript());
 	}
 
 	getHooks(): ForgeMultiHookMap {

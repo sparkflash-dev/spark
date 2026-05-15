@@ -1,11 +1,4 @@
 /*
- *
- * TODO:
- * This test should be replaced by an E2E test.
- *
- */
-
-/*
  * Copyright 2020 balena.io
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
