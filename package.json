@@ -3,7 +3,7 @@
   "private": true,
   "displayName": "Spark",
   "productName": "Spark",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "packageType": "local",
   "main": ".webpack/main",
   "bin": {

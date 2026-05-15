@@ -7,22 +7,38 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
-## [Unreleased] — v3.1.0-dev
+## [3.1.0] — 2026-05-15
 
 ### Added
-- **Russian localization** — complete Russian (ru) translation for all UI strings
-- **Japanese localization** — complete Japanese (ja) translation
-- **Korean localization** — complete Korean (ko) translation
-- **Enhanced Windows ISO detection** — detects Win7–Win11, Server, Vista with version/edition parsing; improved warning with partition layout guidance
-- **Partition & boot mode display** — image details modal now shows MBR/GPT scheme and UEFI/Legacy boot compatibility
-- **Bad sector check** — optional pre-write surface scan setting to detect faulty drive sectors before writing
-- **Flash queue** — queue manager for sequential multi-image flash operations with event system
-- **CLI mode** — `spark flash --image <path> --drive <device>` headless flash with progress bar, `spark list` for drive enumeration
-- **Persistent storage detection** — detects Ubuntu/Mint/Pop!_OS live ISOs and identifies casper-rw persistence support
-- **Flash history** — track last 20 flashed images with auto-pruning of deleted files
-- **Drive health analysis** — heuristic indicators for fake capacity, read-only, bus type, and mountpoint warnings
+- **10 languages** — Russian, Japanese, Korean, German, French, Spanish, Italian, Portuguese localizations
+- **Enhanced Windows ISO detection** — detects Win7–Win11, Server, Vista with version/edition parsing
+- **Partition & boot mode display** — shows MBR/GPT scheme and UEFI/Legacy boot compatibility
+- **Bad sector check** — optional pre-write surface scan setting
+- **Flash queue** — sequential multi-image flash operations with event system
+- **CLI mode** — `spark flash --image <path> --drive <device>` headless flash, `spark list` for drives
+- **Persistent storage detection** — Ubuntu/Mint/Pop!_OS casper-rw persistence support
+- **Flash history** — track last 20 flashed images with auto-pruning
+- **Drive health analysis** — heuristic indicators for fake capacity, read-only, bus type
 - **Auto-eject setting** — optionally eject drive after successful flash
-- **64 new tests** — checksum (15), Windows ISO (12), persistent storage (11), flash queue (17), drive health (9)
+- **Download manager** — fetch images from URL with progress tracking and redirect support
+- **Recent images** — quick re-selection of recently used images
+- **Progress calculator** — sliding window speed estimation with accurate ETA
+- **Streaming hash** — compute SHA256/MD5/SHA512 without loading entire file into memory
+- **Safe unmount/eject** — cross-platform drive unmount and eject utilities
+- **Error codes** — standardized error classification with user-friendly messages
+- **Platform helpers** — OS detection, elevation check, notification support
+- **Theme tokens** — centralized design system (colors, spacing, typography)
+- **Analytics stub** — zero-telemetry guarantee (no-op analytics interface)
+- **Disk labels** — human-friendly drive names from metadata
+- **Keyboard shortcuts** — centralized shortcut definitions and matching
+- **File validation** — pre-flash checks (size, permissions, extension, freshness)
+- **Accessibility** — ARIA labels, screen reader announcements
+- **Desktop notifications** — flash/queue completion notifications
+- **USB speed detection** — USB generation detection with time estimation
+- **Config export/import** — backup and restore settings to JSON
+- **Write speed logging** — historical performance tracking
+- **Image format info** — compression detection and format analysis
+- **100+ new tests** — comprehensive coverage for all new utilities
 
 ### Changed
 - Renamed main entry point `lib/gui/etcher.ts` → `lib/gui/spark.ts`
