@@ -7,6 +7,7 @@ export type Source = 'File' | 'BlockDevice' | 'Http';
 export interface SourceMetadata extends sourceDestination.Metadata {
 	hasMBR?: boolean;
 	partitions?: MBRPartition[] | GPTPartition[];
+	partitionTableType?: 'mbr' | 'gpt';
 	path: string;
 	displayName: string;
 	description: string;

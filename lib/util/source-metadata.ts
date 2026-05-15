@@ -55,6 +55,7 @@ async function getMetadata(
 	if (partitionTable) {
 		metadata.hasMBR = true;
 		metadata.partitions = partitionTable.partitions;
+		metadata.partitionTableType = partitionTable.type as 'mbr' | 'gpt';
 	} else {
 		metadata.hasMBR = false;
 	}

@@ -804,6 +804,33 @@ export class SourceSelector extends React.Component<
 							<Txt.span bold>{i18next.t('source.path')}</Txt.span>
 							<Txt.span>{imagePath}</Txt.span>
 						</Txt.p>
+						{!isNil(imageSize) && (
+							<Txt.p>
+								<Txt.span bold>{i18next.t('source.size')}</Txt.span>
+								<Txt.span>{prettyBytes(imageSize)}</Txt.span>
+							</Txt.p>
+						)}
+						{image.partitionTableType && (
+							<Txt.p>
+								<Txt.span bold>
+									{i18next.t('source.partitionScheme')}
+								</Txt.span>
+								<Txt.span>
+									{image.partitionTableType.toUpperCase()}
+									{image.partitionTableType === 'gpt'
+										? ' (UEFI)'
+										: ' (Legacy BIOS)'}
+								</Txt.span>
+							</Txt.p>
+						)}
+						{image.partitions && image.partitions.length > 0 && (
+							<Txt.p>
+								<Txt.span bold>
+									{i18next.t('source.partitions')}
+								</Txt.span>
+								<Txt.span>{image.partitions.length}</Txt.span>
+							</Txt.p>
+						)}
 					</SmallModal>
 				)}
 
