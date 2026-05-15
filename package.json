@@ -6,6 +6,9 @@
   "version": "3.0.0",
   "packageType": "local",
   "main": ".webpack/main",
+  "bin": {
+    "spark": "./lib/cli/spark-cli.ts"
+  },
   "description": "Flash OS images to SD cards and USB drives — fast, clean, no telemetry.",
   "productDescription": "Spark is a powerful OS image flasher for sysadmins and power users. No telemetry, no ads, no nonsense. Flash SD cards and USB drives safely across Linux, Windows and macOS.",
   "homepage": "https://github.com/sparkflash-dev/spark",
