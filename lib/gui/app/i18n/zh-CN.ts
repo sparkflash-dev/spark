@@ -175,6 +175,7 @@ const translation = {
 			showHiddenDrives: '在目标列表中显示系统和隐藏的磁盘',
 			confirmBeforeFlash: '烧录前始终要求确认',
 			badSectorCheck: '写入前检查目标磁盘坏道（较慢）',
+			autoEjectOnSuccess: '烧录成功后自动弹出磁盘',
 			keyboardShortcuts: '快捷键',
 			shortcutOpen: 'Ctrl+O — 打开镜像文件',
 			shortcutSettings: 'Ctrl+, — 打开设置',

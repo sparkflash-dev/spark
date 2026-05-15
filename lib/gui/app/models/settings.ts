@@ -83,6 +83,7 @@ const DEFAULT_SETTINGS: _.Dictionary<any> = {
 	showHiddenDrives: false,
 	confirmBeforeFlash: true,
 	badSectorCheck: false,
+	autoEjectOnSuccess: true,
 };
 
 const settings = _.cloneDeep(DEFAULT_SETTINGS);

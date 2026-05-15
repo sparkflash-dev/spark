@@ -169,6 +169,7 @@ const translation = {
 			showHiddenDrives: 'Show system and hidden drives in target list',
 			confirmBeforeFlash: 'Always ask for confirmation before flashing',
 			badSectorCheck: 'Run surface scan on target drive before writing (slower)',
+			autoEjectOnSuccess: 'Auto-eject drive after successful flash',
 			keyboardShortcuts: 'Keyboard shortcuts',
 			shortcutOpen: 'Ctrl+O — Open image file',
 			shortcutSettings: 'Ctrl+, — Open settings',

@@ -81,6 +81,10 @@ function getSettingsSections(): SettingSection[] {
 					name: 'showHiddenDrives',
 					label: i18next.t('settings.showHiddenDrives'),
 				},
+				{
+					name: 'autoEjectOnSuccess',
+					label: i18next.t('settings.autoEjectOnSuccess'),
+				},
 			],
 		},
 	];
