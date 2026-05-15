@@ -6,6 +6,9 @@ import en_translation from './i18n/en';
 import ru_translation from './i18n/ru';
 import ja_translation from './i18n/ja';
 import ko_translation from './i18n/ko';
+import de_translation from './i18n/de';
+import fr_translation from './i18n/fr';
+import es_translation from './i18n/es';
 
 export function langParser() {
 	if (process.env.LANG !== undefined) {
@@ -42,9 +45,12 @@ i18next.use(initReactI18next).init({
 		ru: ru_translation,
 		ja: ja_translation,
 		ko: ko_translation,
+		de: de_translation,
+		fr: fr_translation,
+		es: es_translation,
 	},
 });
 
-export const supportedLocales = ['en', 'zh', 'ru', 'ja', 'ko'];
+export const supportedLocales = ['en', 'zh', 'ru', 'ja', 'ko', 'de', 'fr', 'es'];
 
 export default i18next;
