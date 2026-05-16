@@ -36,6 +36,10 @@ export function detectUsbGeneration(busType?: string, description?: string): Usb
 	if (desc.includes('usb 3.0') || desc.includes('usb3.0') || desc.includes('usb 3')) return 'USB 3.0';
 	if (desc.includes('usb 2.0') || desc.includes('usb2.0') || desc.includes('usb 2')) return 'USB 2.0';
 
+	// Check for xHCI (USB 3.x) vs EHCI (USB 2.0)
+	if (desc.includes('xhci') || desc.includes('superspeed')) return 'USB 3.0';
+	if (desc.includes('ehci') || desc.includes('highspeed')) return 'USB 2.0';
+
 	if (bus === 'usb') return 'USB 2.0'; // Conservative default for generic USB
 
 	return 'Unknown';
