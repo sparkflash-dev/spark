@@ -73,3 +73,37 @@ function getIconForType(_type: NotificationType): string | undefined {
 	// Electron will use the app icon by default
 	return undefined;
 }
+
+/**
+ * Notify verification failure.
+ */
+export function notifyVerificationFailed(imageName: string): void {
+	showNotification({
+		title: 'Verification Failed',
+		body: `${imageName} — written data does not match source. Drive may be defective.`,
+		type: 'error',
+	});
+}
+
+/**
+ * Notify update available.
+ */
+export function notifyUpdateAvailable(version: string): void {
+	showNotification({
+		title: 'Update Available',
+		body: `Spark ${version} is available. Check GitHub releases for details.`,
+		type: 'info',
+		silent: true,
+	});
+}
+
+/**
+ * Check if notifications are supported and permitted.
+ */
+export function isNotificationSupported(): boolean {
+	try {
+		return typeof Notification !== 'undefined' && Notification.permission !== 'denied';
+	} catch {
+		return false;
+	}
+}
