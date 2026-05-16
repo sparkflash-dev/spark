@@ -128,3 +128,29 @@ export function getHealthColor(level: HealthLevel): string {
 			return '#ef4444'; // red
 	}
 }
+
+/**
+ * Get an icon name for the health level.
+ */
+export function getHealthIcon(level: HealthLevel): string {
+	switch (level) {
+		case 'good':
+			return 'check-circle';
+		case 'caution':
+			return 'alert-triangle';
+		case 'warning':
+			return 'x-circle';
+	}
+}
+
+/**
+ * Check if a drive's reported size matches common fake capacity patterns.
+ * Fake drives often use exact powers of 2 in their firmware.
+ */
+export function isSuspiciousCapacity(sizeBytes: number): boolean {
+	if (sizeBytes <= 0) return false;
+	const sizeGB = sizeBytes / (1024 * 1024 * 1024);
+	// Exact power-of-2 GB values are suspicious for removable drives
+	const log2 = Math.log2(sizeGB);
+	return Math.abs(log2 - Math.round(log2)) < 0.001 && sizeGB >= 8;
+}
