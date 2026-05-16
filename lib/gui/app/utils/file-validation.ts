@@ -92,6 +92,43 @@ export function validateDriveSize(
 	return { valid: errors.length === 0, warnings, errors };
 }
 
+/**
+ * Check if the image file is locked by another process.
+ * Only reliable on Windows; returns false on other platforms.
+ */
+export function isFileLocked(filePath: string): boolean {
+	try {
+		const fd = fs.openSync(filePath, fs.constants.O_RDONLY | fs.constants.O_NONBLOCK);
+		fs.closeSync(fd);
+		return false;
+	} catch (err: any) {
+		if (err.code === 'EBUSY' || err.code === 'EPERM') return true;
+		return false;
+	}
+}
+
+/**
+ * Validate a URL for image download.
+ */
+export function validateImageUrl(url: string): ValidationResult {
+	const warnings: string[] = [];
+	const errors: string[] = [];
+
+	try {
+		const parsed = new URL(url);
+		if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+			errors.push(`Unsupported protocol: ${parsed.protocol}. Only HTTP and HTTPS are supported.`);
+		}
+		if (parsed.protocol === 'http:') {
+			warnings.push('Using unencrypted HTTP. The download could be tampered with.');
+		}
+	} catch {
+		errors.push('Invalid URL format.');
+	}
+
+	return { valid: errors.length === 0, warnings, errors };
+}
+
 function formatSize(bytes: number): string {
 	if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
 	if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
