@@ -197,6 +197,66 @@ async function flashImage(
 	}
 }
 
+async function verifyImage(imagePath: string, drivePath: string): Promise<void> {
+	if (!fs.existsSync(imagePath)) {
+		console.error(`Error: Image file not found: ${imagePath}`);
+		process.exit(1);
+	}
+
+	const resolvedImage = path.resolve(imagePath);
+	const imageSize = fs.statSync(resolvedImage).size;
+	console.log(`\n⚡ Spark CLI v${version} — Verify Mode`);
+	console.log(`   Image:  ${resolvedImage} (${formatBytes(imageSize)})`);
+	console.log(`   Drive:  ${drivePath}`);
+	console.log('');
+
+	const crypto = require('crypto');
+	const CHUNK = 4 * 1024 * 1024;
+	let offset = 0;
+	let mismatch = false;
+
+	const imgFd = fs.openSync(resolvedImage, 'r');
+	let drvFd: number;
+	try {
+		drvFd = fs.openSync(drivePath, 'r');
+	} catch (err: any) {
+		console.error(`  ✗ Cannot open drive: ${err.message}`);
+		console.error('    Try running with sudo.');
+		fs.closeSync(imgFd);
+		process.exit(1);
+	}
+
+	const imgBuf = Buffer.alloc(CHUNK);
+	const drvBuf = Buffer.alloc(CHUNK);
+
+	while (offset < imageSize) {
+		const toRead = Math.min(CHUNK, imageSize - offset);
+		fs.readSync(imgFd, imgBuf, 0, toRead, offset);
+		fs.readSync(drvFd, drvBuf, 0, toRead, offset);
+
+		if (!imgBuf.slice(0, toRead).equals(drvBuf.slice(0, toRead))) {
+			mismatch = true;
+			break;
+		}
+
+		offset += toRead;
+		const percent = ((offset / imageSize) * 100).toFixed(1);
+		process.stdout.write(`\r  Verifying: ${progressBar(parseFloat(percent))} `);
+	}
+
+	fs.closeSync(imgFd);
+	fs.closeSync(drvFd);
+	console.log('\n');
+
+	if (mismatch) {
+		console.log(`  ✗ Verification FAILED at offset ${formatBytes(offset)}`);
+		console.log('    The drive content does not match the source image.');
+		process.exit(1);
+	} else {
+		console.log(`  ✓ Verification passed — drive matches source image.`);
+	}
+}
+
 // CLI definition
 yargs
 	.scriptName('spark')
@@ -251,10 +311,32 @@ yargs
 	.command('list', 'List available drives', {}, async () => {
 		await listDrives();
 	})
+	.command(
+		'verify',
+		'Verify a written image against source',
+		(y: any) => {
+			return y
+				.option('image', {
+					alias: 'i',
+					describe: 'Path to original image file',
+					type: 'string',
+					demandOption: true,
+				})
+				.option('drive', {
+					alias: 'd',
+					describe: 'Target drive to verify',
+					type: 'string',
+					demandOption: true,
+				});
+		},
+		async (argv: any) => {
+			await verifyImage(argv.image, argv.drive);
+		},
+	)
 	.version(version)
 	.alias('version', 'V')
 	.help()
 	.alias('help', 'h')
-	.demandCommand(1, 'Please specify a command (flash, list)')
+	.demandCommand(1, 'Please specify a command (flash, list, verify)')
 	.strict()
 	.parse();
