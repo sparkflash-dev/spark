@@ -62,6 +62,21 @@ const LIVE_ISO_PATTERNS: Array<{
 		distro: 'Zorin OS',
 		method: 'casper-rw',
 	},
+	{
+		pattern: /budgie/i,
+		distro: 'Ubuntu Budgie',
+		method: 'casper-rw',
+	},
+	{
+		pattern: /ubuntu\s*mate/i,
+		distro: 'Ubuntu MATE',
+		method: 'casper-rw',
+	},
+	{
+		pattern: /neon/i,
+		distro: 'KDE Neon',
+		method: 'casper-rw',
+	},
 ];
 
 const DEFAULT_SUGGESTED_SIZES = [512, 1024, 2048, 4096]; // MB
