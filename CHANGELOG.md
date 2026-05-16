@@ -7,6 +7,45 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [3.2.0] — 2026-05-16
+
+### Added
+- **Arabic localization** — RTL-ready Arabic (ar) locale, now 11 languages supported
+- **Auto-update checker** — checks GitHub releases for new versions without telemetry
+- **Window state persistence** — remembers position, size, and maximized state
+- **Drag-and-drop** — drop image files directly onto the app window
+- **Structured logging** — file-based logs with rotation and configurable levels
+- **Content Security Policy** — strict CSP to prevent XSS and data exfiltration
+- **Privilege escalation** — cross-platform elevation via pkexec/osascript/UAC
+- **ISO 9660 parser** — extract volume label and metadata from ISO images
+- **MBR/GPT detection** — binary partition table detection from image header
+- **Multi-drive write** — simultaneous flash to multiple targets
+- **Drive scanner** — hotplug detection with attach/detach events
+- **Secure IPC** — channel allowlist, sender validation, prototype pollution protection
+- **Electron sandbox** — enforced context isolation and navigation locks
+- **Preload bridge** — secure contextBridge API for renderer process
+- **Crash reporter** — local crash dumps with auto-pruning (zero telemetry)
+- **System tray** — shows progress tooltip during flash operations
+- **Taskbar progress** — OS taskbar/dock progress indicator
+- **Power save blocker** — prevents system sleep during active writes
+- **Native menu** — platform-appropriate menu bar with accelerators
+- **Adaptive write buffers** — auto-tuned buffer size based on drive speed and RAM
+- **Network speed probe** — estimates download time before fetching from URL
+- **Image metadata cache** — avoids redundant reads of large image headers
+- **CLI verify command** — `spark verify --image <path> --drive <device>`
+- **Runtime checks** — validates Node version, disk space, memory, permissions
+- **App paths** — XDG-compliant config/data/log directories
+- **Environment config** — centralized env var handling with defaults
+- **40+ new tests** — write buffers, keyboard shortcuts, IPC security, multi-write, drag-drop, ISO parser, partition table
+
+### Fixed
+- USB speed detection now uses xHCI/EHCI hints for better generation accuracy
+- Persistence detection now includes Ubuntu Budgie, Ubuntu MATE, and KDE Neon
+- File validation now detects locked files and validates download URLs
+- Notifications now cover verification failures and update availability
+
+---
+
 ## [3.1.0] — 2026-05-15
 
 ### Added
