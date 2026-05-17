@@ -12,6 +12,8 @@ import es_translation from './i18n/es';
 import it_translation from './i18n/it';
 import pt_translation from './i18n/pt';
 import ar_translation from './i18n/ar';
+import tr_translation from './i18n/tr';
+import pl_translation from './i18n/pl';
 
 export function langParser() {
 	if (process.env.LANG !== undefined) {
@@ -54,9 +56,11 @@ i18next.use(initReactI18next).init({
 		it: it_translation,
 		pt: pt_translation,
 		ar: ar_translation,
+		tr: tr_translation,
+		pl: pl_translation,
 	},
 });
 
-export const supportedLocales = ['en', 'zh', 'ru', 'ja', 'ko', 'de', 'fr', 'es', 'it', 'pt', 'ar'];
+export const supportedLocales = ['en', 'zh', 'ru', 'ja', 'ko', 'de', 'fr', 'es', 'it', 'pt', 'ar', 'tr', 'pl'];
 
 export default i18next;
