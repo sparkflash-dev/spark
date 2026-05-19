@@ -4,7 +4,7 @@
 
 **Flash OS images to SD cards & USB drives — fast, clean, zero telemetry.**
 
-[![Latest Release](https://img.shields.io/github/v/release/sparkflash-dev/spark?label=v3.0.0&color=%23f59e0b&style=for-the-badge&logo=github)](https://github.com/sparkflash-dev/spark/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/sparkflash-dev/spark?label=v3.3.0&color=%23f59e0b&style=for-the-badge&logo=github)](https://github.com/sparkflash-dev/spark/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/sparkflash-dev/spark/total?color=%231a1a2e&style=for-the-badge&logo=github)](https://github.com/sparkflash-dev/spark/releases/latest)
 [![License](https://img.shields.io/badge/license-Apache--2.0-%2322c55e?style=for-the-badge)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-%239a9ab0?style=for-the-badge&logo=electron)](https://github.com/sparkflash-dev/spark/releases/latest)
