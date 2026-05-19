@@ -15,7 +15,7 @@ export interface ChecksumResult {
 	error?: string;
 }
 
-const CHECKSUM_EXTENSIONS = ['.sha256sum', '.sha256', '.SHA256SUM', '.SHA256'];
+const CHECKSUM_EXTENSIONS = ['.sha256sum', '.sha256', '.SHA256SUM', '.SHA256', '.sha256sums', '.DIGESTS'];
 
 /**
  * Find a checksum sidecar file for the given image path.
@@ -135,4 +135,70 @@ export async function verifyChecksum(
 			error: err.message,
 		};
 	}
+}
+
+/**
+ * Compute MD5 hash of a file (for legacy checksum support).
+ */
+export function computeMD5(
+	filePath: string,
+	onProgress?: (percent: number) => void,
+): Promise<string> {
+	return new Promise((resolve, reject) => {
+		const hash = crypto.createHash('md5');
+		const stat = fs.statSync(filePath);
+		const totalSize = stat.size;
+		let processedSize = 0;
+
+		const stream = fs.createReadStream(filePath);
+
+		stream.on('data', (chunk: Buffer) => {
+			hash.update(chunk);
+			processedSize += chunk.length;
+			if (onProgress && totalSize > 0) {
+				onProgress(Math.round((processedSize / totalSize) * 100));
+			}
+		});
+
+		stream.on('end', () => resolve(hash.digest('hex')));
+		stream.on('error', reject);
+	});
+}
+
+/**
+ * Find and verify using any available checksum format (SHA256 or MD5).
+ */
+export async function autoVerifyChecksum(
+	imagePath: string,
+	onProgress?: (percent: number) => void,
+): Promise<ChecksumResult | null> {
+	// Try SHA256 first
+	const sha256Result = await verifyChecksum(imagePath, onProgress);
+	if (sha256Result) return sha256Result;
+
+	// Try MD5 sidecar
+	const md5Extensions = ['.md5', '.md5sum', '.MD5SUM'];
+	for (const ext of md5Extensions) {
+		const md5Path = imagePath + ext;
+		if (fs.existsSync(md5Path)) {
+			try {
+				const content = fs.readFileSync(md5Path, 'utf-8').trim();
+				const match = content.match(/^([a-fA-F0-9]{32})/);
+				if (match) {
+					const expected = match[1].toLowerCase();
+					const actual = await computeMD5(imagePath, onProgress);
+					return {
+						verified: expected === actual,
+						expected,
+						actual,
+						checksumFile: md5Path,
+					};
+				}
+			} catch {
+				continue;
+			}
+		}
+	}
+
+	return null;
 }
