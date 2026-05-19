@@ -7,6 +7,40 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
 
+## [3.3.0] — 2026-05-19
+
+### Added
+- **Turkish & Polish locales** — 13 languages now supported
+- **Burn profiles** — Fast, Balanced, Safe, Batch presets for one-click configuration
+- **Device lock manager** — prevents concurrent writes to the same drive
+- **Flash summary reports** — detailed and short summaries for completed operations
+- **System info collector** — hardware/software details for About dialog and bug reports
+- **Clipboard utilities** — copy errors, results, detect image URLs from clipboard
+- **Confirmation dialog logic** — contextual severity (system drive → danger, mounted → warning)
+- **Graceful shutdown** — signal handlers with cleanup chain for safe exit
+- **ETA calculator** — exponential smoothing for stable time estimates
+- **OS detection** — identify Ubuntu, Fedora, Arch, etc. from filenames with brand colors
+- **Tooltip manager** — contextual tooltip content for drives and progress
+- **Color utilities** — darken, lighten, contrast calculation for dynamic theming
+- **Rate limiter** — throttle/debounce with trailing call guarantee
+- **Session timer** — track flash count, bytes written, and session uptime
+- **Deep links** — `spark://flash?image=...` protocol handler
+- **Single instance** — focus existing window on re-launch
+- **Drive compatibility** — validate drive-image compatibility before flash
+- **Open at login** — optional auto-start with hidden window
+- **Path sanitization** — prevent directory traversal attacks on file inputs
+- **Temp file cleanup** — tracked temp files with age-based stale removal
+- **Locale detector** — enhanced detection with Electron, Intl, env, and OS probing
+- **Feature flags** — env-var-driven feature toggling
+- **MD5 checksum** — auto-detect SHA256/MD5 sidecar files for verification
+
+### Fixed
+- Locale detection now handles Chinese variants (Hans/Hant) correctly
+- Checksum finder now supports .DIGESTS and .sha256sums extensions
+- Drive compatibility accounts for compressed image estimated sizes
+
+---
+
 ## [3.2.0] — 2026-05-16
 
 ### Added
