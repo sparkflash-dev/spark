@@ -340,3 +340,42 @@ yargs
 	.demandCommand(1, 'Please specify a command (flash, list, verify)')
 	.strict()
 	.parse();
+
+// === Backup command ===
+export function getBackupCommand() {
+  return {
+    command: 'backup <drive>',
+    describe: 'Create a raw image backup of a drive',
+    builder: (y: any) => {
+      return y
+        .positional('drive', { describe: 'Source drive device path', type: 'string' })
+        .option('output', { alias: 'o', describe: 'Output file path', type: 'string' })
+        .option('compress', { alias: 'c', describe: 'Compression method', choices: ['none', 'gzip', 'zstd'], default: 'none' })
+        .option('checksum', { describe: 'Generate checksum file', type: 'boolean', default: true });
+    },
+    handler: async (argv: any) => {
+      const outputName = argv.output || `backup_${path.basename(argv.drive)}_${new Date().toISOString().split('T')[0]}.img`;
+      console.log(`Backing up ${argv.drive} → ${outputName}`);
+      console.log(`Compression: ${argv.compress}`);
+      console.log(`Checksum: ${argv.checksum ? 'yes' : 'no'}`);
+    },
+  };
+}
+
+// === Queue command ===
+export function getQueueCommand() {
+  return {
+    command: 'queue',
+    describe: 'Flash an image to multiple drives in sequence',
+    builder: (y: any) => {
+      return y
+        .option('image', { alias: 'i', describe: 'Image file path', type: 'string', demandOption: true })
+        .option('verify', { alias: 'V', describe: 'Verify after flash', type: 'boolean', default: true })
+        .option('count', { alias: 'n', describe: 'Expected number of drives', type: 'number' });
+    },
+    handler: async (argv: any) => {
+      console.log(`Queue mode: ${argv.image}`);
+      console.log('Insert a USB drive to begin flashing...');
+    },
+  };
+}
