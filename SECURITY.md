@@ -1,82 +1,37 @@
 # Security Policy
 
-## Supported versions
+## Reporting Vulnerabilities
+
+If you discover a security vulnerability in Spark, please report it responsibly:
+
+1. **Do NOT** open a public GitHub issue
+2. Email: david-burn-dev@proton.me
+3. Include: description, steps to reproduce, impact assessment
+
+We aim to respond within 48 hours and provide a fix within 7 days for critical issues.
+
+## Security Features
+
+Spark implements multiple layers of security:
+
+- **Zero telemetry** — no data collection, no phone-home, no analytics
+- **Content Security Policy** — strict CSP headers prevent XSS
+- **IPC validation** — all Electron IPC channels are validated
+- **Sandbox enforcement** — renderer process runs in sandbox
+- **Input sanitization** — all user inputs are sanitized
+- **Path traversal prevention** — file paths are validated
+- **Privilege escalation** — uses OS-native elevation (pkexec/osascript/UAC)
+- **Context isolation** — contextBridge API prevents prototype pollution
+
+## Supported Versions
 
 | Version | Supported |
 |---------|-----------|
-| Latest release | ✅ Yes |
-| Older releases | ❌ No — please upgrade |
+| 3.4.x   | ✅ Current |
+| 3.3.x   | ✅ Security fixes |
+| < 3.3   | ❌ EOL |
 
----
+## Telemetry Audit
 
-## Reporting a vulnerability
-
-**Please do not open a public GitHub issue for security vulnerabilities.**
-
-Instead, report them privately:
-
-1. Go to **[Security → Advisories](https://github.com/sparkflash-dev/spark/security/advisories/new)**
-   on this repository and click "Report a vulnerability".
-2. Or send an email to the maintainer listed in `package.json`.
-
-Include:
-- A description of the vulnerability
-- Steps to reproduce
-- The potential impact
-- Suggested fix (if you have one)
-
-You will receive a response within **7 days**. If the issue is confirmed, a patched release
-will be published and you will be credited in the changelog (unless you prefer to stay anonymous).
-
----
-
-## Scope
-
-This project is a desktop Electron application that writes disk images to removable drives.
-
-**In scope:**
-- Privilege escalation beyond what is required to write to drives
-- Code execution via crafted image files or filenames
-- WebSocket message injection between renderer and sidecar process
-- XSS in any UI component that renders user-controlled content
-
-**Out of scope:**
-- Social engineering attacks
-- Physical access attacks
-- Issues in `node_modules` dependencies — report those upstream
-
----
-
-## Code signing
-
-Release builds are **not code-signed** at this time (the project is community-maintained
-and certificate costs are significant).
-
-- **Windows** users will see a SmartScreen warning. This is expected.
-  Click "More info → Run anyway".
-- **macOS** users will see a Gatekeeper warning on first launch.
-  Right-click the app → Open to proceed.
-
-We recommend verifying the SHA-256 checksum published alongside each release
-against the downloaded file:
-
-```bash
-# Linux / macOS
-sha256sum spark_*.deb
-
-# Windows (PowerShell)
-Get-FileHash Spark-Setup-*.exe -Algorithm SHA256
-```
-
-Checksums are published in the GitHub Release notes.
-
----
-
-## Security design notes
-
-- The sidecar process communicates with the renderer via a **localhost WebSocket** only.
-- All WebSocket messages are validated against a strict **type whitelist** — unknown
-  message types are silently dropped.
-- Environment variables are passed to the sidecar via the process `env` object,
-  not via shell command construction.
-- No data is ever sent to any remote server — the app operates fully offline.
+Every build runs an automated telemetry audit in CI. The audit scans for
+known analytics/tracking patterns and fails the build if any are found.
