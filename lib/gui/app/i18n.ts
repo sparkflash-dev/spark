@@ -61,6 +61,6 @@ i18next.use(initReactI18next).init({
 	},
 });
 
-export const supportedLocales = ['en', 'zh', 'ru', 'ja', 'ko', 'de', 'fr', 'es', 'it', 'pt', 'ar', 'tr', 'pl'];
+export const supportedLocales = ['en', 'zh', 'ru', 'ja', 'ko', 'de', 'fr', 'es', 'it', 'pt', 'ar', 'tr', 'pl', 'hi', 'vi'];
 
 export default i18next;
