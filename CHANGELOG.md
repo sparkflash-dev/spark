@@ -2,60 +2,57 @@
 
 All notable changes to Spark are documented here.
 
-Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)  
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ---
+
 ## [3.4.0] — 2026-05-25
 
 ### Added
-- **Windows ISO detection** — auto-detect Windows version, architecture, edition from filename
+- **Windows ISO support** — auto-detect version, architecture, edition; recommend MBR/GPT and boot mode
 - **Partition scheme selector** — MBR/GPT with boot mode configuration (UEFI/Legacy/CSM)
 - **Boot mode detection** — detect system UEFI/Legacy and Secure Boot status
 - **Drive backup/clone** — create raw image backups with optional compression (gzip/zstd)
 - **Queue mode** — flash same image to multiple drives sequentially with auto-detect
 - **Image library** — bookmark frequently used ISOs with tags, search, and usage stats
 - **Post-flash scripts** — run custom scripts after flashing (inject SSH keys, set hostname, etc.)
-- **Plugin system** — community extension framework with manifest validation
+- **Plugin system** — community extension framework with manifest validation and permission model
 - **Flash history dashboard** — track all flash operations with stats and CSV export
 - **Portable mode** — run from USB with config stored alongside executable
 - **Network image download** — flash directly from HTTP/HTTPS URL with resume support
 - **Multi-boot (Ventoy-style)** — put multiple ISOs on one USB with GRUB boot menu
 - **Persistent storage** — configure casper-rw/overlay for Ubuntu, Fedora, Debian, Kali live USBs
 - **Surface scan** — pre-write bad sector detection with Quick/Standard/Thorough modes
-- **ARIA labels & screen reader** — comprehensive accessibility annotations
-- **High contrast theme** — dark and light high contrast modes for accessibility
-- **Reduced motion** — respect prefers-reduced-motion system preference
-- **Focus trap** — accessible keyboard focus management for modals
-- **Tab order management** — logical keyboard navigation flow
-- **USB speed classification** — detect USB 2.0/3.0/3.1/3.2/USB4 with recommendations
-- **Theme manager** — centralized dark/light theme with CSS variables
-- **Shortcut manager** — configurable keyboard shortcuts with categories
-- **Notification manager** — native OS notifications with action buttons
-- **Release notes parser** — in-app changelog display
-- **CLI backup & queue commands** — `spark backup` and `spark queue` for scripting
-- **System requirements checker** — validate minimum specs for Spark
-- **Memory monitor** — heap usage tracking with pressure detection
-- **Telemetry audit tool** — verify zero-tracking promise in CI
+- **Accessibility** — ARIA labels, screen reader announcements, high contrast themes, reduced motion, focus trap, tab order
+- **USB speed classification** — detect USB 2.0/3.0/3.1/3.2/USB4 with speed recommendations
+- **Theme manager** — centralized dark/light theme with CSS custom properties
+- **Shortcut manager** — 12 configurable keyboard shortcuts across 4 categories
+- **Notification manager** — native OS notifications with action buttons for flash events
+- **Release notes parser** — in-app changelog display with formatting
+- **CLI commands** — `spark backup` and `spark queue` for scripting and automation
+- **System requirements checker** — validate RAM, CPU, disk space, OS compatibility
+- **Memory monitor** — heap usage tracking with pressure detection and trend analysis
+- **Telemetry audit tool** — automated scan for analytics patterns, runs in CI
 - **Hindi locale** — 14th language
 - **Vietnamese locale** — 15th language (15 languages total)
 
 ### Fixed
-- **macOS SD card corruption** — workaround for M-series chip SD card issues
-- **macOS code signing** — Gatekeeper bypass instructions for unsigned builds
+- **macOS SD card corruption** — workaround for M-series chip SD card write issues
+- **macOS code signing** — Gatekeeper bypass instructions and Apple Silicon detection
 - **Write buffer memory leak** — buffer pool prevents GC pressure during large writes
-- **Progress for compressed images** — accurate progress tracking for gzip/xz/zstd streams
+- **Progress for compressed images** — accurate tracking for gzip/xz/zstd streams
 - **Locale edge cases** — extended fallback chain with RTL support and font recommendations
 - **Wayland drag-and-drop** — display server detection and Ozone platform flags
 
 ### Improved
 - **Direct I/O** — bypass OS buffer cache for faster writes on Linux
-- **Parallel verification** — verify flash segments concurrently for faster post-write checks
+- **Parallel verification** — verify flash segments concurrently
 - **Write resume** — checkpoint recovery for interrupted writes
 - **Lazy loading** — defer heavy module loading for faster startup
 - **Bundle analysis** — identify large dependencies with optimization suggestions
 - **Startup performance** — tracking and metrics for launch time optimization
-- **Error handling** — centralized error handler with user-friendly recovery suggestions
+- **Error handling** — centralized handler with user-friendly recovery suggestions
 - **Input sanitization** — prevent injection attacks in filenames, URLs, device paths
 
 ### Security
@@ -71,6 +68,7 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - **CONTRIBUTING.md** — developer setup, code style, and contribution guidelines
 - **SECURITY.md** — vulnerability reporting policy and security features overview
 
+---
 
 ## [3.3.0] — 2026-05-19
 
@@ -81,18 +79,16 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - **Flash summary reports** — detailed and short summaries for completed operations
 - **System info collector** — hardware/software details for About dialog and bug reports
 - **Clipboard utilities** — copy errors, results, detect image URLs from clipboard
-- **Confirmation dialog logic** — contextual severity (system drive → danger, mounted → warning)
+- **Confirmation dialog logic** — contextual severity (system drive = danger, mounted = warning)
 - **Graceful shutdown** — signal handlers with cleanup chain for safe exit
 - **ETA calculator** — exponential smoothing for stable time estimates
 - **OS detection** — identify Ubuntu, Fedora, Arch, etc. from filenames with brand colors
-- **Tooltip manager** — contextual tooltip content for drives and progress
 - **Color utilities** — darken, lighten, contrast calculation for dynamic theming
 - **Rate limiter** — throttle/debounce with trailing call guarantee
 - **Session timer** — track flash count, bytes written, and session uptime
 - **Deep links** — `spark://flash?image=...` protocol handler
 - **Single instance** — focus existing window on re-launch
 - **Drive compatibility** — validate drive-image compatibility before flash
-- **Open at login** — optional auto-start with hidden window
 - **Path sanitization** — prevent directory traversal attacks on file inputs
 - **Temp file cleanup** — tracked temp files with age-based stale removal
 - **Locale detector** — enhanced detection with Electron, Intl, env, and OS probing
@@ -105,71 +101,6 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - Drive compatibility accounts for compressed image estimated sizes
 
 ---
-## [3.4.0] — 2026-05-25
-
-### Added
-- **Windows ISO detection** — auto-detect Windows version, architecture, edition from filename
-- **Partition scheme selector** — MBR/GPT with boot mode configuration (UEFI/Legacy/CSM)
-- **Boot mode detection** — detect system UEFI/Legacy and Secure Boot status
-- **Drive backup/clone** — create raw image backups with optional compression (gzip/zstd)
-- **Queue mode** — flash same image to multiple drives sequentially with auto-detect
-- **Image library** — bookmark frequently used ISOs with tags, search, and usage stats
-- **Post-flash scripts** — run custom scripts after flashing (inject SSH keys, set hostname, etc.)
-- **Plugin system** — community extension framework with manifest validation
-- **Flash history dashboard** — track all flash operations with stats and CSV export
-- **Portable mode** — run from USB with config stored alongside executable
-- **Network image download** — flash directly from HTTP/HTTPS URL with resume support
-- **Multi-boot (Ventoy-style)** — put multiple ISOs on one USB with GRUB boot menu
-- **Persistent storage** — configure casper-rw/overlay for Ubuntu, Fedora, Debian, Kali live USBs
-- **Surface scan** — pre-write bad sector detection with Quick/Standard/Thorough modes
-- **ARIA labels & screen reader** — comprehensive accessibility annotations
-- **High contrast theme** — dark and light high contrast modes for accessibility
-- **Reduced motion** — respect prefers-reduced-motion system preference
-- **Focus trap** — accessible keyboard focus management for modals
-- **Tab order management** — logical keyboard navigation flow
-- **USB speed classification** — detect USB 2.0/3.0/3.1/3.2/USB4 with recommendations
-- **Theme manager** — centralized dark/light theme with CSS variables
-- **Shortcut manager** — configurable keyboard shortcuts with categories
-- **Notification manager** — native OS notifications with action buttons
-- **Release notes parser** — in-app changelog display
-- **CLI backup & queue commands** — `spark backup` and `spark queue` for scripting
-- **System requirements checker** — validate minimum specs for Spark
-- **Memory monitor** — heap usage tracking with pressure detection
-- **Telemetry audit tool** — verify zero-tracking promise in CI
-- **Hindi locale** — 14th language
-- **Vietnamese locale** — 15th language (15 languages total)
-
-### Fixed
-- **macOS SD card corruption** — workaround for M-series chip SD card issues
-- **macOS code signing** — Gatekeeper bypass instructions for unsigned builds
-- **Write buffer memory leak** — buffer pool prevents GC pressure during large writes
-- **Progress for compressed images** — accurate progress tracking for gzip/xz/zstd streams
-- **Locale edge cases** — extended fallback chain with RTL support and font recommendations
-- **Wayland drag-and-drop** — display server detection and Ozone platform flags
-
-### Improved
-- **Direct I/O** — bypass OS buffer cache for faster writes on Linux
-- **Parallel verification** — verify flash segments concurrently for faster post-write checks
-- **Write resume** — checkpoint recovery for interrupted writes
-- **Lazy loading** — defer heavy module loading for faster startup
-- **Bundle analysis** — identify large dependencies with optimization suggestions
-- **Startup performance** — tracking and metrics for launch time optimization
-- **Error handling** — centralized error handler with user-friendly recovery suggestions
-- **Input sanitization** — prevent injection attacks in filenames, URLs, device paths
-
-### Security
-- **CSP builder** — dynamic Content Security Policy with strict mode and validation
-- **Context isolation** — enforce Electron contextIsolation and sandbox
-- **Input sanitizer** — SSRF prevention, path traversal blocking, shell escaping
-
-### CI/CD
-- **GitHub Actions** — lint, test, build on Node 18/20 across Linux, Windows, macOS
-- **Telemetry audit** — automated scan for analytics patterns in CI pipeline
-
-### Documentation
-- **CONTRIBUTING.md** — developer setup, code style, and contribution guidelines
-- **SECURITY.md** — vulnerability reporting policy and security features overview
-
 
 ## [3.2.0] — 2026-05-16
 
@@ -198,88 +129,20 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - **Image metadata cache** — avoids redundant reads of large image headers
 - **CLI verify command** — `spark verify --image <path> --drive <device>`
 - **Runtime checks** — validates Node version, disk space, memory, permissions
-- **App paths** — XDG-compliant config/data/log directories
-- **Environment config** — centralized env var handling with defaults
 - **40+ new tests** — write buffers, keyboard shortcuts, IPC security, multi-write, drag-drop, ISO parser, partition table
 
 ### Fixed
 - USB speed detection now uses xHCI/EHCI hints for better generation accuracy
 - Persistence detection now includes Ubuntu Budgie, Ubuntu MATE, and KDE Neon
 - File validation now detects locked files and validates download URLs
-- Notifications now cover verification failures and update availability
 
 ---
-## [3.4.0] — 2026-05-25
-
-### Added
-- **Windows ISO detection** — auto-detect Windows version, architecture, edition from filename
-- **Partition scheme selector** — MBR/GPT with boot mode configuration (UEFI/Legacy/CSM)
-- **Boot mode detection** — detect system UEFI/Legacy and Secure Boot status
-- **Drive backup/clone** — create raw image backups with optional compression (gzip/zstd)
-- **Queue mode** — flash same image to multiple drives sequentially with auto-detect
-- **Image library** — bookmark frequently used ISOs with tags, search, and usage stats
-- **Post-flash scripts** — run custom scripts after flashing (inject SSH keys, set hostname, etc.)
-- **Plugin system** — community extension framework with manifest validation
-- **Flash history dashboard** — track all flash operations with stats and CSV export
-- **Portable mode** — run from USB with config stored alongside executable
-- **Network image download** — flash directly from HTTP/HTTPS URL with resume support
-- **Multi-boot (Ventoy-style)** — put multiple ISOs on one USB with GRUB boot menu
-- **Persistent storage** — configure casper-rw/overlay for Ubuntu, Fedora, Debian, Kali live USBs
-- **Surface scan** — pre-write bad sector detection with Quick/Standard/Thorough modes
-- **ARIA labels & screen reader** — comprehensive accessibility annotations
-- **High contrast theme** — dark and light high contrast modes for accessibility
-- **Reduced motion** — respect prefers-reduced-motion system preference
-- **Focus trap** — accessible keyboard focus management for modals
-- **Tab order management** — logical keyboard navigation flow
-- **USB speed classification** — detect USB 2.0/3.0/3.1/3.2/USB4 with recommendations
-- **Theme manager** — centralized dark/light theme with CSS variables
-- **Shortcut manager** — configurable keyboard shortcuts with categories
-- **Notification manager** — native OS notifications with action buttons
-- **Release notes parser** — in-app changelog display
-- **CLI backup & queue commands** — `spark backup` and `spark queue` for scripting
-- **System requirements checker** — validate minimum specs for Spark
-- **Memory monitor** — heap usage tracking with pressure detection
-- **Telemetry audit tool** — verify zero-tracking promise in CI
-- **Hindi locale** — 14th language
-- **Vietnamese locale** — 15th language (15 languages total)
-
-### Fixed
-- **macOS SD card corruption** — workaround for M-series chip SD card issues
-- **macOS code signing** — Gatekeeper bypass instructions for unsigned builds
-- **Write buffer memory leak** — buffer pool prevents GC pressure during large writes
-- **Progress for compressed images** — accurate progress tracking for gzip/xz/zstd streams
-- **Locale edge cases** — extended fallback chain with RTL support and font recommendations
-- **Wayland drag-and-drop** — display server detection and Ozone platform flags
-
-### Improved
-- **Direct I/O** — bypass OS buffer cache for faster writes on Linux
-- **Parallel verification** — verify flash segments concurrently for faster post-write checks
-- **Write resume** — checkpoint recovery for interrupted writes
-- **Lazy loading** — defer heavy module loading for faster startup
-- **Bundle analysis** — identify large dependencies with optimization suggestions
-- **Startup performance** — tracking and metrics for launch time optimization
-- **Error handling** — centralized error handler with user-friendly recovery suggestions
-- **Input sanitization** — prevent injection attacks in filenames, URLs, device paths
-
-### Security
-- **CSP builder** — dynamic Content Security Policy with strict mode and validation
-- **Context isolation** — enforce Electron contextIsolation and sandbox
-- **Input sanitizer** — SSRF prevention, path traversal blocking, shell escaping
-
-### CI/CD
-- **GitHub Actions** — lint, test, build on Node 18/20 across Linux, Windows, macOS
-- **Telemetry audit** — automated scan for analytics patterns in CI pipeline
-
-### Documentation
-- **CONTRIBUTING.md** — developer setup, code style, and contribution guidelines
-- **SECURITY.md** — vulnerability reporting policy and security features overview
-
 
 ## [3.1.0] — 2026-05-15
 
 ### Added
 - **10 languages** — Russian, Japanese, Korean, German, French, Spanish, Italian, Portuguese localizations
-- **Enhanced Windows ISO detection** — detects Win7–Win11, Server, Vista with version/edition parsing
+- **Enhanced Windows ISO detection** — detects Win7-Win11, Server, Vista with version/edition parsing
 - **Partition & boot mode display** — shows MBR/GPT scheme and UEFI/Legacy boot compatibility
 - **Bad sector check** — optional pre-write surface scan setting
 - **Flash queue** — sequential multi-image flash operations with event system
@@ -289,99 +152,26 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - **Drive health analysis** — heuristic indicators for fake capacity, read-only, bus type
 - **Auto-eject setting** — optionally eject drive after successful flash
 - **Download manager** — fetch images from URL with progress tracking and redirect support
-- **Recent images** — quick re-selection of recently used images
 - **Progress calculator** — sliding window speed estimation with accurate ETA
 - **Streaming hash** — compute SHA256/MD5/SHA512 without loading entire file into memory
 - **Safe unmount/eject** — cross-platform drive unmount and eject utilities
 - **Error codes** — standardized error classification with user-friendly messages
-- **Platform helpers** — OS detection, elevation check, notification support
-- **Theme tokens** — centralized design system (colors, spacing, typography)
-- **Analytics stub** — zero-telemetry guarantee (no-op analytics interface)
-- **Disk labels** — human-friendly drive names from metadata
 - **Keyboard shortcuts** — centralized shortcut definitions and matching
 - **File validation** — pre-flash checks (size, permissions, extension, freshness)
 - **Accessibility** — ARIA labels, screen reader announcements
 - **Desktop notifications** — flash/queue completion notifications
 - **USB speed detection** — USB generation detection with time estimation
 - **Config export/import** — backup and restore settings to JSON
-- **Write speed logging** — historical performance tracking
-- **Image format info** — compression detection and format analysis
 - **100+ new tests** — comprehensive coverage for all new utilities
 
 ### Changed
-- Renamed main entry point `lib/gui/etcher.ts` → `lib/gui/spark.ts`
-- Fixed `isStartScrpt()` typo → `isStartScript()` in forge.sidecar.ts
+- Renamed main entry point `lib/gui/etcher.ts` -> `lib/gui/spark.ts`
+- Fixed `isStartScrpt()` typo -> `isStartScript()` in forge.sidecar.ts
 - Cleaned up stale TODO/FIXME comments across codebase
 - Deleted unused balena.svg and etcher.svg assets
 - Updated all remaining "Etcher" references in code comments
-- Added missing cancel dialog translations to zh-CN and zh-TW
 
 ---
-## [3.4.0] — 2026-05-25
-
-### Added
-- **Windows ISO detection** — auto-detect Windows version, architecture, edition from filename
-- **Partition scheme selector** — MBR/GPT with boot mode configuration (UEFI/Legacy/CSM)
-- **Boot mode detection** — detect system UEFI/Legacy and Secure Boot status
-- **Drive backup/clone** — create raw image backups with optional compression (gzip/zstd)
-- **Queue mode** — flash same image to multiple drives sequentially with auto-detect
-- **Image library** — bookmark frequently used ISOs with tags, search, and usage stats
-- **Post-flash scripts** — run custom scripts after flashing (inject SSH keys, set hostname, etc.)
-- **Plugin system** — community extension framework with manifest validation
-- **Flash history dashboard** — track all flash operations with stats and CSV export
-- **Portable mode** — run from USB with config stored alongside executable
-- **Network image download** — flash directly from HTTP/HTTPS URL with resume support
-- **Multi-boot (Ventoy-style)** — put multiple ISOs on one USB with GRUB boot menu
-- **Persistent storage** — configure casper-rw/overlay for Ubuntu, Fedora, Debian, Kali live USBs
-- **Surface scan** — pre-write bad sector detection with Quick/Standard/Thorough modes
-- **ARIA labels & screen reader** — comprehensive accessibility annotations
-- **High contrast theme** — dark and light high contrast modes for accessibility
-- **Reduced motion** — respect prefers-reduced-motion system preference
-- **Focus trap** — accessible keyboard focus management for modals
-- **Tab order management** — logical keyboard navigation flow
-- **USB speed classification** — detect USB 2.0/3.0/3.1/3.2/USB4 with recommendations
-- **Theme manager** — centralized dark/light theme with CSS variables
-- **Shortcut manager** — configurable keyboard shortcuts with categories
-- **Notification manager** — native OS notifications with action buttons
-- **Release notes parser** — in-app changelog display
-- **CLI backup & queue commands** — `spark backup` and `spark queue` for scripting
-- **System requirements checker** — validate minimum specs for Spark
-- **Memory monitor** — heap usage tracking with pressure detection
-- **Telemetry audit tool** — verify zero-tracking promise in CI
-- **Hindi locale** — 14th language
-- **Vietnamese locale** — 15th language (15 languages total)
-
-### Fixed
-- **macOS SD card corruption** — workaround for M-series chip SD card issues
-- **macOS code signing** — Gatekeeper bypass instructions for unsigned builds
-- **Write buffer memory leak** — buffer pool prevents GC pressure during large writes
-- **Progress for compressed images** — accurate progress tracking for gzip/xz/zstd streams
-- **Locale edge cases** — extended fallback chain with RTL support and font recommendations
-- **Wayland drag-and-drop** — display server detection and Ozone platform flags
-
-### Improved
-- **Direct I/O** — bypass OS buffer cache for faster writes on Linux
-- **Parallel verification** — verify flash segments concurrently for faster post-write checks
-- **Write resume** — checkpoint recovery for interrupted writes
-- **Lazy loading** — defer heavy module loading for faster startup
-- **Bundle analysis** — identify large dependencies with optimization suggestions
-- **Startup performance** — tracking and metrics for launch time optimization
-- **Error handling** — centralized error handler with user-friendly recovery suggestions
-- **Input sanitization** — prevent injection attacks in filenames, URLs, device paths
-
-### Security
-- **CSP builder** — dynamic Content Security Policy with strict mode and validation
-- **Context isolation** — enforce Electron contextIsolation and sandbox
-- **Input sanitizer** — SSRF prevention, path traversal blocking, shell escaping
-
-### CI/CD
-- **GitHub Actions** — lint, test, build on Node 18/20 across Linux, Windows, macOS
-- **Telemetry audit** — automated scan for analytics patterns in CI pipeline
-
-### Documentation
-- **CONTRIBUTING.md** — developer setup, code style, and contribution guidelines
-- **SECURITY.md** — vulnerability reporting policy and security features overview
-
 
 ## [3.0.0] — 2026-05-12
 
@@ -390,82 +180,17 @@ Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - **SHA256 checksum verification** — automatically detects `.sha256sum` / `.sha256` sidecar files and verifies image integrity with progress indicator
 - **Improved error messages** — every flash error now includes human-readable troubleshooting tips
 - **Keyboard shortcuts** — `Ctrl/Cmd+,` opens settings, `Escape` closes modals
-- **New Spark logo** — lightning bolt gradient (amber → red) with glow effect
+- **New Spark logo** — lightning bolt gradient (amber -> red) with glow effect
 
 ### Changed
-- Complete rebranding: all `ETCHER_*` environment variables → `SPARK_*`
-- `window.etcher` API → `window.spark`
+- Complete rebranding: all `ETCHER_*` environment variables -> `SPARK_*`
+- `window.etcher` API -> `window.spark`
 - All UI strings updated across English, Chinese Simplified, and Chinese Traditional
 - Progress bar colors: decompressing (amber), flashing (red), verifying (green)
-- Linux install paths: `/opt/balenaEtcher/` → `/opt/Spark/`
+- Linux install paths: `/opt/balenaEtcher/` -> `/opt/Spark/`
 - Switched typography from SourceSansPro to Inter system font stack
 
 ---
-## [3.4.0] — 2026-05-25
-
-### Added
-- **Windows ISO detection** — auto-detect Windows version, architecture, edition from filename
-- **Partition scheme selector** — MBR/GPT with boot mode configuration (UEFI/Legacy/CSM)
-- **Boot mode detection** — detect system UEFI/Legacy and Secure Boot status
-- **Drive backup/clone** — create raw image backups with optional compression (gzip/zstd)
-- **Queue mode** — flash same image to multiple drives sequentially with auto-detect
-- **Image library** — bookmark frequently used ISOs with tags, search, and usage stats
-- **Post-flash scripts** — run custom scripts after flashing (inject SSH keys, set hostname, etc.)
-- **Plugin system** — community extension framework with manifest validation
-- **Flash history dashboard** — track all flash operations with stats and CSV export
-- **Portable mode** — run from USB with config stored alongside executable
-- **Network image download** — flash directly from HTTP/HTTPS URL with resume support
-- **Multi-boot (Ventoy-style)** — put multiple ISOs on one USB with GRUB boot menu
-- **Persistent storage** — configure casper-rw/overlay for Ubuntu, Fedora, Debian, Kali live USBs
-- **Surface scan** — pre-write bad sector detection with Quick/Standard/Thorough modes
-- **ARIA labels & screen reader** — comprehensive accessibility annotations
-- **High contrast theme** — dark and light high contrast modes for accessibility
-- **Reduced motion** — respect prefers-reduced-motion system preference
-- **Focus trap** — accessible keyboard focus management for modals
-- **Tab order management** — logical keyboard navigation flow
-- **USB speed classification** — detect USB 2.0/3.0/3.1/3.2/USB4 with recommendations
-- **Theme manager** — centralized dark/light theme with CSS variables
-- **Shortcut manager** — configurable keyboard shortcuts with categories
-- **Notification manager** — native OS notifications with action buttons
-- **Release notes parser** — in-app changelog display
-- **CLI backup & queue commands** — `spark backup` and `spark queue` for scripting
-- **System requirements checker** — validate minimum specs for Spark
-- **Memory monitor** — heap usage tracking with pressure detection
-- **Telemetry audit tool** — verify zero-tracking promise in CI
-- **Hindi locale** — 14th language
-- **Vietnamese locale** — 15th language (15 languages total)
-
-### Fixed
-- **macOS SD card corruption** — workaround for M-series chip SD card issues
-- **macOS code signing** — Gatekeeper bypass instructions for unsigned builds
-- **Write buffer memory leak** — buffer pool prevents GC pressure during large writes
-- **Progress for compressed images** — accurate progress tracking for gzip/xz/zstd streams
-- **Locale edge cases** — extended fallback chain with RTL support and font recommendations
-- **Wayland drag-and-drop** — display server detection and Ozone platform flags
-
-### Improved
-- **Direct I/O** — bypass OS buffer cache for faster writes on Linux
-- **Parallel verification** — verify flash segments concurrently for faster post-write checks
-- **Write resume** — checkpoint recovery for interrupted writes
-- **Lazy loading** — defer heavy module loading for faster startup
-- **Bundle analysis** — identify large dependencies with optimization suggestions
-- **Startup performance** — tracking and metrics for launch time optimization
-- **Error handling** — centralized error handler with user-friendly recovery suggestions
-- **Input sanitization** — prevent injection attacks in filenames, URLs, device paths
-
-### Security
-- **CSP builder** — dynamic Content Security Policy with strict mode and validation
-- **Context isolation** — enforce Electron contextIsolation and sandbox
-- **Input sanitizer** — SSRF prevention, path traversal blocking, shell escaping
-
-### CI/CD
-- **GitHub Actions** — lint, test, build on Node 18/20 across Linux, Windows, macOS
-- **Telemetry audit** — automated scan for analytics patterns in CI pipeline
-
-### Documentation
-- **CONTRIBUTING.md** — developer setup, code style, and contribution guidelines
-- **SECURITY.md** — vulnerability reporting policy and security features overview
-
 
 ## [2.1.4] — 2026-05-04
 
@@ -479,7 +204,7 @@ This is the **first Spark release**, forked from balenaEtcher v2.1.4.
 - "Join the balena team" recruiting banner in the DevTools console
 
 ### Removed — marketing
-- `efp.balena.io` featured-project webview displayed during flashing (occupied 64 % of the window)
+- `efp.balena.io` featured-project webview displayed during flashing (occupied 64% of the window)
 - `efp.balena.io/success-banner` webview on the finish screen
 - Analytics consent banner shown on every app launch
 - UTM and referrer parameters on the logo link, menu items and settings changelog link
@@ -496,85 +221,20 @@ This is the **first Spark release**, forked from balenaEtcher v2.1.4.
 - `errorReporting` and `updatesEnabled` settings now default to `false`
 - WebSocket messages validated against a strict type whitelist on both the renderer and sidecar — unknown types are dropped
 - `JSON.parse` calls on incoming WebSocket data wrapped in `try/catch` — malformed messages no longer crash the process
-- Windows environment variable injection uses `execFile('cmd.exe', …)` instead of `exec()` to prevent shell injection
+- Windows environment variable injection uses `execFile('cmd.exe', ...)` instead of `exec()` to prevent shell injection
 - `dangerouslySetInnerHTML` in the warning modal replaced with a safe renderer that allows only `http(s)://` anchor hrefs
 - Silent error swallowing in `source-metadata.ts` — errors now propagate with a `console.error` log
 - Node.js engines constraint relaxed from `>=20 <21` to `>=20` (adds Node 22 support)
 
 ### Changed
 - App renamed from **balenaEtcher** to **Spark**
-- Executable: `balena-etcher` → `spark`
-- App protocol: `etcher://` → `spark://`
-- Bundle ID: `io.balena.etcher` → `io.github.sparkflash-dev.spark`
+- Executable: `balena-etcher` -> `spark`
+- App protocol: `etcher://` -> `spark://`
+- Bundle ID: `io.balena.etcher` -> `io.github.sparkflash-dev.spark`
 - GitHub Actions CI workflow added (typecheck + lint on every push/PR)
 - GitHub Actions release workflow added (cross-platform builds triggered by version tags)
 
 ---
-## [3.4.0] — 2026-05-25
-
-### Added
-- **Windows ISO detection** — auto-detect Windows version, architecture, edition from filename
-- **Partition scheme selector** — MBR/GPT with boot mode configuration (UEFI/Legacy/CSM)
-- **Boot mode detection** — detect system UEFI/Legacy and Secure Boot status
-- **Drive backup/clone** — create raw image backups with optional compression (gzip/zstd)
-- **Queue mode** — flash same image to multiple drives sequentially with auto-detect
-- **Image library** — bookmark frequently used ISOs with tags, search, and usage stats
-- **Post-flash scripts** — run custom scripts after flashing (inject SSH keys, set hostname, etc.)
-- **Plugin system** — community extension framework with manifest validation
-- **Flash history dashboard** — track all flash operations with stats and CSV export
-- **Portable mode** — run from USB with config stored alongside executable
-- **Network image download** — flash directly from HTTP/HTTPS URL with resume support
-- **Multi-boot (Ventoy-style)** — put multiple ISOs on one USB with GRUB boot menu
-- **Persistent storage** — configure casper-rw/overlay for Ubuntu, Fedora, Debian, Kali live USBs
-- **Surface scan** — pre-write bad sector detection with Quick/Standard/Thorough modes
-- **ARIA labels & screen reader** — comprehensive accessibility annotations
-- **High contrast theme** — dark and light high contrast modes for accessibility
-- **Reduced motion** — respect prefers-reduced-motion system preference
-- **Focus trap** — accessible keyboard focus management for modals
-- **Tab order management** — logical keyboard navigation flow
-- **USB speed classification** — detect USB 2.0/3.0/3.1/3.2/USB4 with recommendations
-- **Theme manager** — centralized dark/light theme with CSS variables
-- **Shortcut manager** — configurable keyboard shortcuts with categories
-- **Notification manager** — native OS notifications with action buttons
-- **Release notes parser** — in-app changelog display
-- **CLI backup & queue commands** — `spark backup` and `spark queue` for scripting
-- **System requirements checker** — validate minimum specs for Spark
-- **Memory monitor** — heap usage tracking with pressure detection
-- **Telemetry audit tool** — verify zero-tracking promise in CI
-- **Hindi locale** — 14th language
-- **Vietnamese locale** — 15th language (15 languages total)
-
-### Fixed
-- **macOS SD card corruption** — workaround for M-series chip SD card issues
-- **macOS code signing** — Gatekeeper bypass instructions for unsigned builds
-- **Write buffer memory leak** — buffer pool prevents GC pressure during large writes
-- **Progress for compressed images** — accurate progress tracking for gzip/xz/zstd streams
-- **Locale edge cases** — extended fallback chain with RTL support and font recommendations
-- **Wayland drag-and-drop** — display server detection and Ozone platform flags
-
-### Improved
-- **Direct I/O** — bypass OS buffer cache for faster writes on Linux
-- **Parallel verification** — verify flash segments concurrently for faster post-write checks
-- **Write resume** — checkpoint recovery for interrupted writes
-- **Lazy loading** — defer heavy module loading for faster startup
-- **Bundle analysis** — identify large dependencies with optimization suggestions
-- **Startup performance** — tracking and metrics for launch time optimization
-- **Error handling** — centralized error handler with user-friendly recovery suggestions
-- **Input sanitization** — prevent injection attacks in filenames, URLs, device paths
-
-### Security
-- **CSP builder** — dynamic Content Security Policy with strict mode and validation
-- **Context isolation** — enforce Electron contextIsolation and sandbox
-- **Input sanitizer** — SSRF prevention, path traversal blocking, shell escaping
-
-### CI/CD
-- **GitHub Actions** — lint, test, build on Node 18/20 across Linux, Windows, macOS
-- **Telemetry audit** — automated scan for analytics patterns in CI pipeline
-
-### Documentation
-- **CONTRIBUTING.md** — developer setup, code style, and contribution guidelines
-- **SECURITY.md** — vulnerability reporting policy and security features overview
-
 
 *For the history prior to this fork see
 [balenaEtcher releases](https://github.com/balena-io/etcher/releases).*
